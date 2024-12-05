@@ -121,7 +121,8 @@ function App() {
         <header className="header">
           <div className="Garde">
             <img src={logo} alt="Logo" className="logo" />
-            <h1>FADSGI DJIBOUTI</h1>
+            <h1>FADSGI DJIBOUTIs
+               MBF</h1>
           </div>
           <div className="user-info">
             <span>Ali Mohamed Yacoub</span>
