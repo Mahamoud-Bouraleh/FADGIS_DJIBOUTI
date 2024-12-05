@@ -1,0 +1,18 @@
+{
+    "header": {
+      "welcome": "Bienvenue!",
+      "logout": "Déconnexion",
+      "user": "Ali Mohamed Yacoub"
+    },
+    "menu": {
+      "dashboard": "Tableau de Bord",
+      "human_resources": "Ressources Humaines",
+      "gis": "Cartographie (GIS)",
+      "control": "Contrôle",
+      "planning": "Planification",
+      "inventory": "Suivi des Stocks et Matériel",
+      "reports": "Rapports et Analyse",
+      "settings": "Paramètres"
+    }
+  }
+  

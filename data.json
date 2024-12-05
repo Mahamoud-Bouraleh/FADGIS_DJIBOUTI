@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "name": "ali mohamed ",
+      "position": "Manage",
+      "department": "Sales",
+      "service_status": "active",
+      "latitude": 11.5767,
+      "longitude": 43.1405,
+      "timestamp": "2024-11-20T08:30:00Z"
+    },
+    {
+      "id": 2,
+      "name": "warsame abdillahi",
+      "position": "Enginee",
+      "department": "Engineering",
+      "service_status": "inactive",
+      "latitude": 11.5770,
+      "longitude": 43.1410,
+      "timestamp": "2024-11-20T09:00:00Z"
+    }
+  ]
+  

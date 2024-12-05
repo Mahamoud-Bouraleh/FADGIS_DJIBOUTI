@@ -1,0 +1,18 @@
+{
+    "header": {
+      "welcome": "Welcome!",
+      "logout": "Logout",
+      "user": "Ali Mohamed Yacoub"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "human_resources": "Human Resources",
+      "gis": "GIS Mapping",
+      "control": "Control",
+      "planning": "Planning",
+      "inventory": "Inventory and Stock Tracking",
+      "reports": "Reports and Analysis",
+      "settings": "Settings"
+    }
+  }
+  
