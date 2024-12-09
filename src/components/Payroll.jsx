@@ -2,96 +2,18 @@ import React, { useState, useContext } from "react";
 import "./GestionEmploy.css";
 import { DataContext } from "../context/DataContext";
 
-import AjoutArme from "./submenu/AjoutArme";
-import ImportListe from "./submenu/ImportListe";
+import GeneratePayroll from "./submenu/GeneratePayroll";
 import DataTable from "react-data-table-component";
 import { Button, Input, InputGroup } from "reactstrap";
 
 const GestionEmploy = () => {
   // const { employeeData, setEmployeeData } = useContext(DataContext);
   const [activeTab, setActiveTab] = useState("Gestion des employés");
-  const [formData, setFormData] = useState({
-    nom: "",
-    email: "",
-    telephone: "",
-    departement: "",
-    poste: "",
-    photo: null,
-  });
 
   // Sample employee data
-  const [employeeData, setEmployeeData] = useState([
-    {
-      id: 1,
-      nom: "Jean Dupont",
-      email: "jean.dupont@example.com",
-      telephone: "0612345678",
-      departement: "Finance",
-      poste: "Analyste",
-      photo: "https://via.placeholder.com/50", // Placeholder photo
-    },
-    {
-      id: 2,
-      nom: "Marie Curie",
-      email: "marie.curie@example.com",
-      telephone: "0623456789",
-      departement: "Recherche",
-      poste: "Scientifique",
-      photo: "https://via.placeholder.com/50",
-    },
-  ]);
+ 
 
-  // Columns for DataTable
-  const columns = [
-    {
-      name: "Photo",
-      selector: (row) => <img src={row.photo} alt="Photo" width={50} />,
-      sortable: false,
-    },
-    {
-      name: "Nom",
-      selector: (row) => row.nom,
-      sortable: true,
-    },
-    {
-      name: "Email",
-      selector: (row) => row.email,
-      sortable: true,
-    },
-    {
-      name: "Téléphone",
-      selector: (row) => row.telephone,
-      sortable: true,
-    },
-    {
-      name: "Département",
-      selector: (row) => row.departement,
-      sortable: true,
-    },
-    {
-      name: "Poste",
-      selector: (row) => row.poste,
-      sortable: true,
-    },
-    {
-      name: "Actions",
-      cell: (row) => (
-        <div className="d-flex gap-2">
-          <Button
-            size="sm"
-            color="info"
-            onClick={() => alert(`Viewing ${row.nom}`)}
-          >
-            Voir
-          </Button>
-          <Button size="sm" color="danger" onClick={() => handleDelete(row.id)}>
-            Supprimer
-          </Button>
-        </div>
-      ),
-      sortable: false,
-    },
-  ];
+
 
   // Delete employee by ID
   const handleDelete = (id) => {
@@ -121,12 +43,7 @@ const GestionEmploy = () => {
     setEmployeeData([...employeeData, formData]);
     alert("Employee data saved!");
     setFormData({
-      nom: "",
-      email: "",
-      telephone: "",
-      departement: "",
-      poste: "",
-      photo: null,
+
     });
   };
 
@@ -148,11 +65,11 @@ const GestionEmploy = () => {
             className={activeTab === "Ajouter Arme" ? "active" : ""}
             onClick={() => handleTabClick("Ajouter Arme")}
           >
-            Ajouter Arme
+            GeneratePayroll
           </li>
           <li
-            className={activeTab === "Import Liste" ? "active" : ""}
-            onClick={() => handleTabClick("ImportListe")}
+            className={activeTab === "GeneratePayroll" ? "active" : ""}
+            onClick={() => handleTabClick("GeneratePayroll")}
           >
             Import Liste
           </li>
@@ -196,7 +113,7 @@ const GestionEmploy = () => {
             />
           </div>
         )}
-        {activeTab === "Ajouter Arme" && <AjoutArme />}
+        {activeTab === "Ajouter Arme" && <GeneratePayroll />}
         {activeTab === "Import Liste" && <ImportListe/>}
         {activeTab === "Inactif Arme" && <div>Content for Inactif Arme</div>}
         {activeTab === "Info Département" && (
@@ -207,4 +124,6 @@ const GestionEmploy = () => {
   );
 };
 
-export default GestionEmploy;
+
+
+export default Payroll;

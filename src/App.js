@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import './App.css';
-import logo from './logo.png';
-import { useTranslation } from 'react-i18next';
-import MapPage from './components/MapPage';
-import CarteInteractivePage from './components/CarteInteractivePage';
-import LocaliVehicule from './components/LocaliVehicule'; 
-import PersonnTemp from './components/PersonnTemp';
-import ZoneControl from './components/ZoneControl'; 
-import GestionEmploy from './components/GestionEmploy';  
-import { DataProvider } from './context/DataContext'; 
+import React, { useState } from "react";
+import "./App.css";
+import logo from "./logo.png";
+import { useTranslation } from "react-i18next";
+import MapPage from "./components/MapPage";
+import CarteInteractivePage from "./components/CarteInteractivePage";
+import LocaliVehicule from "./components/LocaliVehicule";
+import PersonnTemp from "./components/PersonnTemp";
+import ZoneControl from "./components/ZoneControl";
+import GestionEmploy from "./components/GestionEmploy";
+import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
+import { DataProvider } from "./context/DataContext";
+import{ GeneratePayroll } from "./submenu/GeneratePayroll";
 import {
   FaUser,
   FaCog,
@@ -19,14 +21,15 @@ import {
   FaShieldAlt,
   FaSignOutAlt,
   FaBoxOpen,
-} from 'react-icons/fa';
+  FaMoneyBillWave,
+} from "react-icons/fa";
 
 function App() {
   const [openSubmenu, setOpenSubmenu] = useState(null);
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState("Dashboard"); // Default to "Dashboard"
   const { t, i18n } = useTranslation();
 
-  // Simplified language change handler
+  // Language change handler
   const handleLanguageChange = (event) => {
     const language = event.target.value;
     i18n.changeLanguage(language);
@@ -34,75 +37,83 @@ function App() {
 
   const menuItems = [
     {
-      title: t('dashboard'),
+      title: t("dashboard"),
       icon: <FaHome />,
-      subItems: [],
+      subItems: [{ name: t("dashboard"), component: "Dashboard" }],
     },
     {
-      title: t('humanResources'),
+      title: t("humanResources"),
       icon: <FaUser />,
       subItems: [
-        { name: t('training'), component: null },
-        { name: t('scheduling'), component: null },
-        { name: t('employeeManagement'), component: 'GestionEmploy' },
-        { name: t('militaryOps'), component: null },
-        { name: t('teamAssignment'), component: null },
+        { name: t("training"), component: null },
+        { name: t("scheduling"), component: null },
+        { name: t("employeeManagement"), component: "GestionEmploy" },
+        { name: t("militaryOps"), component: null },
+        { name: t("teamAssignment"), component: null },
       ],
     },
     {
-      title: t('mapping'),
+      title: t("payrol"),
+      icon: <FaMoneyBillWave />,
+      subItems: [
+        { name: t("generale payrol"), component: "GeneratePayroll" },
+        { name: t("tax reduction"), component: null },
+      ],
+    },
+    {
+      title: t("mapping"),
       icon: <FaMapMarkedAlt />,
       subItems: [
-        { name: t('generalMap'), component: 'MapPage' },
-        { name: t('interactiveMap'), component: 'CarteInteractivePage' },
-        { name: t('vehicleLocation'), component: 'LocaliVehicule' },
-        { name: t('realTimePersonnel'), component: 'PersonnTemp' },
-        { name: t('controlZones'), component: 'ZoneControl' },
+        { name: t("generalMap"), component: "MapPage" },
+        { name: t("interactiveMap"), component: "CarteInteractivePage" },
+        { name: t("vehicleLocation"), component: "LocaliVehicule" },
+        { name: t("realTimePersonnel"), component: "PersonnTemp" },
+        { name: t("controlZones"), component: "ZoneControl" },
       ],
     },
     {
-      title: t('control'),
+      title: t("control"),
       icon: <FaShieldAlt />,
       subItems: [
-        { name: t('realTimeTracking'), component: null },
-        { name: t('vehicleRegistration'), component: null },
-        { name: t('accessManagement'), component: null },
-        { name: t('preventiveMaintenance'), component: null },
+        { name: t("realTimeTracking"), component: null },
+        { name: t("vehicleRegistration"), component: null },
+        { name: t("accessManagement"), component: null },
+        { name: t("preventiveMaintenance"), component: null },
       ],
     },
     {
-      title: t('planning'),
+      title: t("planning"),
       icon: <FaCalendar />,
       subItems: [],
     },
     {
-      title: t('inventory'),
+      title: t("inventory"),
       icon: <FaBoxOpen />,
       subItems: [
-        { name: t('equipmentInventory'), component: null },
-        { name: t('renewalAlerts'), component: null },
-        { name: t('materialTracking'), component: null },
-        { name: t('materialNeeds'), component: null },
-        { name: t('materialRegistration'), component: null },
+        { name: t("equipmentInventory"), component: null },
+        { name: t("renewalAlerts"), component: null },
+        { name: t("materialTracking"), component: null },
+        { name: t("materialNeeds"), component: null },
+        { name: t("materialRegistration"), component: null },
       ],
     },
     {
-      title: t('reports'),
+      title: t("reports"),
       icon: <FaChartBar />,
       subItems: [
-        { name: t('performanceReports'), component: null },
-        { name: t('securityStats'), component: null },
-        { name: t('operationsTracking'), component: null },
+        { name: t("performanceReports"), component: null },
+        { name: t("securityStats"), component: null },
+        { name: t("operationsTracking"), component: null },
       ],
     },
     {
-      title: t('settings'),
+      title: t("settings"),
       icon: <FaCog />,
       subItems: [
-        { name: t('userRoles'), component: null },
-        { name: t('mapSettings'), component: null },
-        { name: t('alertConfig'), component: null },
-        { name: t('gisConfig'), component: null },
+        { name: t("userRoles"), component: null },
+        { name: t("mapSettings"), component: null },
+        { name: t("alertConfig"), component: null },
+        { name: t("gisConfig"), component: null },
       ],
     },
   ];
@@ -121,22 +132,22 @@ function App() {
         <header className="header">
           <div className="Garde">
             <img src={logo} alt="Logo" className="logo" />
-            <h1>FADSGI DJIBOUTI </h1>
+            <h1>FADSGI DJIBOUTI</h1>
           </div>
           <div className="user-info">
             <span>Ali Mohamed Yacoub</span>
             <div className="language-select">
-              <select 
-                onChange={handleLanguageChange} 
+              <select
+                onChange={handleLanguageChange}
                 value={i18n.language}
                 className="language-selector"
               >
-                <option value="fr">{t('french')}</option>
-                <option value="en">{t('english')}</option>
+                <option value="fr">{t("french")}</option>
+                <option value="en">{t("english")}</option>
               </select>
             </div>
             <button className="logout-button">
-              {t('logout')} <FaSignOutAlt />
+              {t("logout")} <FaSignOutAlt />
             </button>
           </div>
         </header>
@@ -157,8 +168,10 @@ function App() {
                     {menuItem.subItems.map((subItem, subIndex) => (
                       <div
                         key={subIndex}
-                        className={`submenu-item ${activeItem === subItem.name ? 'active' : ''}`}
-                        onClick={() => handleItemClick(subItem.name)}
+                        className={`submenu-item ${
+                          activeItem === subItem.name ? "active" : ""
+                        }`}
+                        onClick={() => handleItemClick(subItem.component)}
                       >
                         {subItem.name}
                       </div>
@@ -170,20 +183,28 @@ function App() {
           </aside>
 
           <main className="main-content">
-            {activeItem === t('generalMap') ? (
+            {activeItem === "Dashboard" ? (
+              <Dashboard />
+            ) : activeItem === "MapPage" ? (
               <MapPage />
-            ) : activeItem === t('interactiveMap') ? (
+            ) : activeItem === "CarteInteractivePage" ? (
               <CarteInteractivePage />
-            ) : activeItem === t('vehicleLocation') ? (
+            ) : activeItem === "LocaliVehicule" ? (
               <LocaliVehicule />
-            ) : activeItem === t('realTimePersonnel') ? (
+            ) : activeItem === "PersonnTemp" ? (
               <PersonnTemp />
-            ) : activeItem === t('controlZones') ? (
+            ) : activeItem === "GeneratePayroll" ? (
+              <GeneratePayroll />
+            )
+            
+            
+            
+            : activeItem === "ZoneControl" ? (
               <ZoneControl />
-            ) : activeItem === t('employeeManagement') ? (
+            ) : activeItem === "GestionEmploy" ? (
               <GestionEmploy />
             ) : (
-              <h2>{activeItem || t('welcome')}</h2>
+              <h2>{t("welcome")}</h2>
             )}
           </main>
         </div>

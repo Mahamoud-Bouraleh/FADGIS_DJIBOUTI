@@ -12,6 +12,8 @@ const AjoutArme = () => {
     tel: ''
   });
   const [tuteurs, setTuteurs] = useState([{ id: 1, photo: null }, { id: 2, photo: null }]);
+  const [idCounter, setIdCounter] = useState(1); // Commence à 1
+
 
   const handleStepClick = (step) => {
     setActiveStep(step);
@@ -66,46 +68,57 @@ const AjoutArme = () => {
         </aside>
 
         <div className="form-section">
-          {activeStep === 1 && (
-            <div>
-              <h2>Info l'arm</h2>
-              <p>Remplir toutes les informations</p>
-              <form className="info-form">
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Nom*</label>
-                    <input
-                      type="text"
-                      name="nom"
-                      placeholder="Nom de l'élève"
-                      required
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Sexe*</label>
-                    <select name="sexe" required onChange={handleInputChange}>
-                      <option value="">Sélectionner...</option>
-                      <option value="male">Masculin</option>
-                      <option value="female">Féminin</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label>Date de naissance*</label>
-                    <input
-                      type="date"
-                      name="dateNaissance"
-                      required
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <button type="button" className="next-button" onClick={handleNextStep}>
-                  Aller suite
-                </button>
-              </form>
-            </div>
-          )}
+  {activeStep === 1 && (
+    <div>
+      <h2>Info l'arm</h2>
+      <p>Remplir toutes les informations</p>
+      <form className="info-form">
+        <div className="form-row">
+          <div className="form-group">
+            <label>ID Employé (Emid)*</label>
+            <input
+              type="text"
+              name="Emid"
+              value={formData.Emid || `FADSRH${String(idCounter).padStart(6, '0')}`}
+              readOnly
+            />
+          </div>
+          <div className="form-group">
+            <label>Nom*</label>
+            <input
+              type="text"
+              name="nom"
+              placeholder="Nom de l'élève"
+              required
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Sexe*</label>
+            <select name="sexe" required onChange={handleInputChange}>
+              <option value="">Sélectionner...</option>
+              <option value="male">Masculin</option>
+              <option value="female">Féminin</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Date de naissance*</label>
+            <input
+              type="date"
+              name="dateNaissance"
+              required
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+        <button type="button" className="next-button" onClick={handleNextStep}>
+          Aller suite
+        </button>
+      </form>
+    </div>
+  )}
+</div>
+<div>
 
           {activeStep === 2 && (
             <div>
