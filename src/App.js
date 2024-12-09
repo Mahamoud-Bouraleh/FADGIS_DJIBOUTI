@@ -10,7 +10,8 @@ import ZoneControl from "./components/ZoneControl";
 import GestionEmploy from "./components/GestionEmploy";
 import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
 import { DataProvider } from "./context/DataContext";
-import{ GeneratePayroll } from "./submenu/GeneratePayroll";
+import GeneratePayroll from "./components/submenu/GeneratePayroll";
+
 import {
   FaUser,
   FaCog,
