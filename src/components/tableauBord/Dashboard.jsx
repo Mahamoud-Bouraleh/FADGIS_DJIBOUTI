@@ -43,25 +43,17 @@ const Dashboard = () => {
       </section>
 
       <section className="charts-section">
-  <div className="chart-card blue-card">
-    <h3>Website Views</h3>
-    <canvas id="chart1"></canvas>
-    <p>Last Campaign Performance</p>
-    <small><i>⏱️ Campaign sent 2 days ago</i></small>
-  </div>
-  <div className="chart-card green-card">
-    <h3>Daily Sales</h3>
-    <canvas id="chart2"></canvas>
-    <p>(+15%) increase in today sales</p>
-    <small><i>Updated 4 min ago</i></small>
-  </div>
-  <div className="chart-card black-card">
-    <h3>Completed Tasks</h3>
-    <canvas id="chart3"></canvas>
-    <p>Last Campaign Performance</p>
-    <small><i>Just updated</i></small>
-  </div>
-</section>
+        <div className="chart-card">
+          <h3>Activités statistiques</h3>
+          <canvas></canvas>
+          <p>Dernière campagne</p>
+        </div>
+        <div className="chart-card">
+          <h3>Statistiques par date</h3>
+          <canvas></canvas>
+          <p>Mise à jour il y a 4 minutes</p>
+        </div>
+      </section>
 
     </div>
   );

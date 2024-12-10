@@ -1,86 +1,46 @@
+/* Structure principale */
 .app-container {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  overflow: hidden; /* Prevents extra scrolling space */
+  overflow: hidden;
 }
 
+/* En-tête */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(128, 128, 128, 0.5); /* Transparent gray */
+  background-color: rgba(128, 128, 128, 0.5);
   padding: 10px 20px;
+  flex-wrap: wrap; /* Permet le passage à plusieurs lignes */
 }
 
-
-.content-container {
-  display: flex;
-  height: calc(100vh - 60px); /* Adjust height to exclude header height */
-  overflow: hidden; /* Prevent extra space */
-}
-
-.sidebar {
-  background-color: #2c2c54;
-  color: #d1d1d1;
-  width: 250px;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto; /* Allows scrolling in sidebar if content overflows */
-}
-
-.main-content {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #f4f4f4;
-  overflow-y: auto; /* Allows scrolling within main content */
-  display: flex;
-  align-items: flex-start; /* Align content at the top */
-  justify-content: center;
-}
-
-/* Removes unwanted space around content */
-.form-section {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.info-form .form-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.submit-button {
-  margin-top: 15px;
-}
-
-
-
-
+/* Logo et titre */
 .Garde {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 .Garde .logo {
-  height: 70px;
-  margin-right: 30px;
+  height: 50px; /* Taille ajustée pour mobiles */
+  margin-right: 15px;
 }
 
 .Garde h1 {
-  font-size: 1.5em;
+  font-size: 1.2rem; /* Taille de police réduite pour mobile */
   color: #333;
 }
 
+/* Informations utilisateur */
 .user-info {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap; /* Permet le retour à la ligne */
 }
 
 .language-select select {
@@ -89,49 +49,37 @@
   border: 1px solid #ccc;
 }
 
+/* Bouton de déconnexion */
 .logout-button {
   display: flex;
   align-items: center;
-  justify-content: center; /* Assure que l'icône est centrée dans le bouton */
-  width: 50px; /* Définit une largeur fixe pour le bouton (ajustez si nécessaire) */
-  height: 50px; /* Définit une hauteur fixe pour faire un cercle parfait */
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   background-color: #f8f9fa;
   border: 1px solid #ddd;
-  border-radius: 50%; /* Assure que le bouton a une forme circulaire */
-  font-size: 1.5rem; /* Taille de l'icône */
+  border-radius: 50%;
+  font-size: 1.2rem;
   color: #333;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .logout-button:hover {
-  background-color: red; /* Couleur de fond au survol */
-  color: #fff; /* Couleur du texte au survol */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
-}
-.icons {
-  display: flex;
-  gap: 20px; /* Espacement entre les icônes */
-  align-items: center;
+  background-color: red;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.icon {
-  font-size: 1.5rem; /* Taille des icônes */
-  color: #555; /* Couleur initiale */
-  cursor: pointer; /* Montre que l'icône est interactive */
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-.icon:hover {
-  color: #007bff; /* Couleur au survol */
-  transform: scale(1.2); /* Zoom léger au survol */
-}
-
-
-
+/* Conteneur principal */
 .content-container {
   display: flex;
-  height: calc(100vh - 60px);
+  flex-grow: 1;
+  height: calc(100vh - 60px); /* Hauteur dynamique */
+  overflow: hidden;
 }
 
+/* Barre latérale */
 .sidebar {
   background-color: #2c2c54;
   color: #d1d1d1;
@@ -141,25 +89,23 @@
   overflow-y: auto;
 }
 
-.menu-item {
-  padding: 10px;
-  cursor: pointer;
+.sidebar .menu-item {
   display: flex;
   align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
   color: #d1d1d1;
   transition: background-color 0.3s ease;
-  gap: 15px;
 }
 
-.menu-item:hover,
-.menu-item.active {
+.sidebar .menu-item:hover,
+.sidebar .menu-item.active {
   background-color: #3f51b5;
-  color: white;
+  color: #fff;
 }
 
-
-
-/* Vertical Submenu Styling */
+/* Sous-menu */
 .submenu {
   padding-left: 20px;
   margin-top: 5px;
@@ -171,75 +117,63 @@
   padding: 8px 10px;
   margin: 3px 0;
   cursor: pointer;
-  color: #0f0f0f;
+  color: #d1d1d1;
   transition: color 0.3s ease, background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  gap: 10px;
 }
 
-.submenu-item.active,
-.submenu-item:hover {
+.submenu-item:hover,
+.submenu-item.active {
   color: #ffffff;
   background-color: #3f51b5;
 }
 
-/* Icon alignment within submenu items */
-.submenu-item i {
-  margin-right: 8px;
-  min-width: 1.5rem;
-  font-size: 16px;
-}
-
+/* Contenu principal */
 .main-content {
   flex-grow: 1;
-  padding: 20px;
+  padding: 10px;
   background-color: #f4f4f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2em;
-}
-.language-select {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  overflow-y: auto;
 }
 
-.language-select select{
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.language-select select:hover {
-  border-color: #4caf50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+/* Media Queries */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Empile les éléments */
+    align-items: flex-start;
+  }
+
+  .Garde {
+    justify-content: center;
+  }
+
+  .sidebar {
+    width: 200px; /* Réduit la largeur */
+  }
+
+  .menu-item {
+    font-size: 0.9rem; /* Réduit la taille du texte */
+  }
 }
 
-.lang-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  border: 1px solid #4CAF50; /* Green border */
-  border-radius: 5px;
-  background-color: #f9f9f9; /* Light background */
-  color: #4CAF50; /* Green text */
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+@media (max-width: 480px) {
+  .header {
+    padding: 5px;
+  }
 
-.lang-button:hover {
-  background-color: #4CAF50;
-  color: #fff;
-}
+  .Garde .logo {
+    height: 40px;
+  }
 
-.lang-button.active {
-  background-color: #4CAF50;
-  color: #fff;
-  border: 1px solid #4CAF50;
+  .Garde h1 {
+    font-size: 1rem;
+  }
+
+  .sidebar {
+    width: 100px; /* Sidebar plus compacte */
+    padding: 10px;
+  }
+
+  .main-content {
+    padding: 5px;
+  }
 }
