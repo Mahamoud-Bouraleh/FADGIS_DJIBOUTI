@@ -1,179 +1,225 @@
+/* Global Styles */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body, html {
-    height: 100%;
-    font-family: Arial, sans-serif;
-  }
-  
-  .gestion-employ-page {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .page-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #faf6f6;
-    color: rgb(8, 8, 8);
-    padding: 15px;
-  }
-  
-  .page-header h1 {
-    font-size: 20px;
-  }
-  
-  /* Horizontal Submenu Styling */
-  .submenu {
-    display: flex;
-    justify-content: center;
-    background-color: #aaaaaa;
-    padding: 10px 0;
-  }
-  
-  .submenu ul {
-    list-style-type: none;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .submenu li {
-    color: #3577f1;
-    cursor: pointer;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.8125rem;
-    font-weight: 400;
-    border: 1px solid #3577f1;
-    border-radius: 0.25rem;
-    background-color: transparent;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  
-  .submenu li:hover {
-    color: #fff;
-    background-color: #3577f1;
-    border-color: #3577f1;
-  }
-  
-  .submenu .active {
-    color: #fff;
-    background-color: #3577f1;
-    border-color: #3577f1;
-  }
-  
-  .content {
-    padding: 20px;
-    font-size: 16px;
-  }
-  
-  /* Button Styles */
-  .btn {
-    box-shadow: var(--vz-btn-box-shadow);
-  }
-  
-  .btn-outline-secondary {
-    --vz-btn-color: #3577f1;
-    --vz-btn-border-color: #3577f1;
-    --vz-btn-hover-color: #fff;
-    --vz-btn-hover-bg: #3577f1;
-    --vz-btn-hover-border-color: #3577f1;
-    --vz-btn-focus-shadow-rgb: 53, 119, 241;
-    --vz-btn-active-color: #fff;
-    --vz-btn-active-bg: #3577f1;
-    --vz-btn-active-border-color: #3577f1;
-    --vz-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --vz-btn-disabled-color: #3577f1;
-    --vz-btn-disabled-bg: transparent;
-    --vz-btn-disabled-border-color: #3577f1;
-    --vz-gradient: none;
-  }
-  
-  .btn {
-    --vz-btn-padding-x: 0.9rem;
-    --vz-btn-padding-y: 0.5rem;
-    --vz-btn-font-family: Arial, sans-serif;
-    --vz-btn-font-size: 0.8125rem;
-    --vz-btn-font-weight: 400;
-    --vz-btn-line-height: 1.5;
-    --vz-btn-color: #212529;
-    --vz-btn-bg: transparent;
-    --vz-btn-border-width: 1px;
-    --vz-btn-border-color: transparent;
-    --vz-btn-border-radius: 0.25rem;
-    --vz-btn-hover-border-color: transparent;
-    --vz-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
-    --vz-btn-disabled-opacity: 0.65;
-    --vz-btn-focus-box-shadow: 0 0 0 0 rgba(var(--vz-btn-focus-shadow-rgb), .5);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  }
-  
-  .gestion-employ-container {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .excel-button {
-    background-color: #28a745;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .excel-button i {
-    margin-right: 5px;
-  }
-  
-  .excel-button:hover {
-    background-color: #218838;
-  }
-  
-  .employee-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .employee-table th,
-  .employee-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .actions-column {
-    display: flex;
+body, html {
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Page Layout */
+.gestion-employ-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebebec;
+  color: #fff;
+  padding: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Horizontal Submenu */
+.submenu {
+  display: flex;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 10px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.submenu ul {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.submenu li {
+  color: #007bff;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.submenu li:hover,
+.submenu .active {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Content Area */
+.content {
+  padding: 20px;
+  font-size: 16px;
+}
+
+/* Buttons */
+button,
+.btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; /* Ensure buttons are inline */
+  margin-right: 10px; /* Add spacing between buttons */
+}
+
+.btn-success {
+  background-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Search Bar */
+.input-group {
+  margin-bottom: 20px; /* Add space below search bar */
+}
+
+input[type="text"],
+.input-group input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Table */
+.table {
+  width: 100%;
+  max-width: 1400px; /* Increase table width */
+  margin: 20px auto; /* Center the table */
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table tr:hover {
+  background-color: #e9ecef;
+}
+
+.table .actions-column {
+  display: flex; /* Utilisation de flexbox */
+  gap: 10px; /* Espacement entre les boutons */
+  justify-content: flex-start; /* Aligner les boutons à gauche */
+}
+
+.table .actions-column button {
+  flex-shrink: 0; /* Empêche les boutons de rétrécir */
+}
+
+
+.table .action-icon {
+  color: #007bff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.table .action-icon:hover {
+  color: #0056b3;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .submenu ul {
+    flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;
+    justify-content: center; /* Centre les éléments horizontalement */
+    display: flex; /* Assure que les éléments sont en flex */
+    align-items: center; /* Aligne les éléments verticalement */
   }
-  
-  .action-icon {
-    color: #6f42c1;
-    font-size: 18px;
-    cursor: pointer;
-    transition: color 0.3s;
+
+  .table {
+    max-width: 100%;
   }
-  
-  .action-icon:hover {
-    color: #5a32a1;
+
+  .table th,
+  .table td {
+    font-size: 12px;
+    padding: 8px;
   }
-  
+
+  .input-group input {
+    width: 100%;
+  }
+
+  button,
+  .btn {
+    width: 100%; /* Les boutons s'empilent en petits écrans */
+    margin-bottom: 10px;
+  }
+}

@@ -1,27 +1,89 @@
-import React from 'react';
-import './GeneratePayroll.css';
+import React from "react";
+import "./GeneratePayroll.css";
 
 const payrollData = [
   {
     id: 1,
-    empId: 'EBS00007',
-    employeeName: 'Raho Abdoulkador Ismael',
-    baseSalary: 63191.00,
+    empId: "FRS00012",
+    employeeName: "Jamal Omar Mohamed",
+    baseSalary: 20000.0,
+    retirementContribution: 0.0,
+    amuContribution: 0.0,
+    deduction: 0.0,
+    cnss: 0.0,
+    taxableWages: 0.0,
+    its: 0.0,
+    netSalary: 20000.0,
+  },
+  {
+    id: 2,
+    empId: "FRS00010",
+    employeeName: "Mumino Omar Said",
+    baseSalary: 30000.0,
+    retirementContribution: 0.0,
+    amuContribution: 0.0,
+    deduction: 0.0,
+    cnss: 0.0,
+    taxableWages: 0.0,
+    its: 0.0,
+    netSalary: 30000.0,
+  },
+  {
+    id: 3,
+    empId: "FRS00011",
+    employeeName: "Umeyma Mohamed Ibrahim",
+    baseSalary: 35000.0,
+    retirementContribution: 0.0,
+    amuContribution: 0.0,
+    deduction: 0.0,
+    cnss: 0.0,
+    taxableWages: 0.0,
+    its: 0.0,
+    netSalary: 35000.0,
+  },
+  {
+    id: 4,
+    empId: "FRS00007",
+    employeeName: "Raho Abdoulkader Ismael",
+    baseSalary: 63191.0,
     retirementContribution: 2527.64,
     amuContribution: 1263.82,
     deduction: 9920.99,
     cnss: 13712.45,
     taxableWages: 59399.54,
-    its: 4400.00,
+    its: 4400.0,
     netSalary: 54999.54,
   },
-  // Ajoutez d'autres employés ici si nécessaire
 ];
 
 const GeneratePayroll = () => {
   return (
     <div className="payroll-container">
-      <h1>Generate Payroll</h1>
+      <div className="header">
+        <h1>Generate Pay Roll</h1>
+        <div className="filters">
+          <select>
+            <option>2024 -- Nov</option>
+            {/* Add more options */}
+          </select>
+          <select>
+            <option>Faras</option>
+            {/* Add more companies */}
+          </select>
+          <button className="btn show-btn">Show</button>
+          <button className="btn generate-btn">Generate</button>
+        </div>
+      </div>
+
+      <div className="search-export">
+        <input
+          type="text"
+          placeholder="Search Employee"
+          className="search-input"
+        />
+        <button className="btn export-btn">Export Report</button>
+      </div>
+
       <table className="payroll-table">
         <thead>
           <tr>

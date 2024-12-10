@@ -18,7 +18,6 @@ import {
   FaChartBar,
   FaHome,
   FaMapMarkedAlt,
-  FaCalendar,
   FaShieldAlt,
   FaSignOutAlt,
   FaBoxOpen,
@@ -82,11 +81,7 @@ function App() {
         { name: t("preventiveMaintenance"), component: null },
       ],
     },
-    {
-      title: t("planning"),
-      icon: <FaCalendar />,
-      subItems: [],
-    },
+  
     {
       title: t("inventory"),
       icon: <FaBoxOpen />,
@@ -134,6 +129,8 @@ function App() {
           <div className="Garde">
             <img src={logo} alt="Logo" className="logo" />
             <h1>FADSGI DJIBOUTI</h1>
+
+            
           </div>
           <div className="user-info">
             <span>Ali Mohamed Yacoub</span>
@@ -147,9 +144,21 @@ function App() {
                 <option value="en">{t("english")}</option>
               </select>
             </div>
-            <button className="logout-button">
-              {t("logout")} <FaSignOutAlt />
-            </button>
+
+
+
+        <div className="search-container">
+          
+          <div className="icons">
+            <span className="icon">🔔</span>
+            <span className="icon">⚙️</span>
+            
+          </div>
+        </div>
+        <button className="logout-button">
+        <span className="icon">👤</span>
+         </button>
+
           </div>
         </header>
 

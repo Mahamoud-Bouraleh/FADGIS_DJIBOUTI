@@ -11,9 +11,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e0e4e8;
+  background-color: rgba(128, 128, 128, 0.5); /* Transparent gray */
   padding: 10px 20px;
 }
+
 
 .content-container {
   display: flex;
@@ -91,17 +92,40 @@
 .logout-button {
   display: flex;
   align-items: center;
-  padding: 5px 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  justify-content: center; /* Assure que l'icône est centrée dans le bouton */
+  width: 50px; /* Définit une largeur fixe pour le bouton (ajustez si nécessaire) */
+  height: 50px; /* Définit une hauteur fixe pour faire un cercle parfait */
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 50%; /* Assure que le bouton a une forme circulaire */
+  font-size: 1.5rem; /* Taille de l'icône */
+  color: #333;
   cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.logout-button:hover {
+  background-color: red; /* Couleur de fond au survol */
+  color: #fff; /* Couleur du texte au survol */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
+}
+.icons {
+  display: flex;
+  gap: 20px; /* Espacement entre les icônes */
+  align-items: center;
 }
 
-.logout-button:hover {
-  background-color: #45a049;
+.icon {
+  font-size: 1.5rem; /* Taille des icônes */
+  color: #555; /* Couleur initiale */
+  cursor: pointer; /* Montre que l'icône est interactive */
+  transition: color 0.3s ease, transform 0.3s ease;
 }
+.icon:hover {
+  color: #007bff; /* Couleur au survol */
+  transform: scale(1.2); /* Zoom léger au survol */
+}
+
+
 
 .content-container {
   display: flex;
@@ -124,6 +148,7 @@
   align-items: center;
   color: #d1d1d1;
   transition: background-color 0.3s ease;
+  gap: 15px;
 }
 
 .menu-item:hover,
@@ -132,11 +157,7 @@
   color: white;
 }
 
-.menu-icon {
-  margin-right: 10px;
-  min-width: 1.75rem;
-  font-size: 18px;
-}
+
 
 /* Vertical Submenu Styling */
 .submenu {
@@ -155,6 +176,7 @@
   display: flex;
   align-items: center;
   border-radius: 4px;
+  gap: 10px;
 }
 
 .submenu-item.active,
@@ -179,10 +201,25 @@
   justify-content: center;
   font-size: 1.2em;
 }
-
 .language-select {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-select select{
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.language-select select:hover {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 .lang-button {
