@@ -9,7 +9,7 @@ import PersonnTemp from "./components/PersonnTemp";
 import ZoneControl from "./components/ZoneControl";
 import GestionEmploy from "./components/GestionEmploy";
 import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
-import { DataProvider } from "./context/DataContext";
+import { EmployeeProvider } from "./components/EmployeeContext";
 import GeneratePayroll from "./components/submenu/GeneratePayroll";
 
 import {
@@ -56,7 +56,7 @@ function App() {
       title: t("payrol"),
       icon: <FaMoneyBillWave />,
       subItems: [
-        { name: t("generale payrol"), component: "GeneratePayroll" },
+        { name: t("general payroll"), component: "GeneratePayroll" },
         { name: t("tax reduction"), component: null },
       ],
     },
@@ -81,7 +81,6 @@ function App() {
         { name: t("preventiveMaintenance"), component: null },
       ],
     },
-  
     {
       title: t("inventory"),
       icon: <FaBoxOpen />,
@@ -122,15 +121,36 @@ function App() {
     setActiveItem(item);
   };
 
+  const renderComponent = () => {
+    switch (activeItem) {
+      case "Dashboard":
+        return <Dashboard />;
+      case "MapPage":
+        return <MapPage />;
+      case "CarteInteractivePage":
+        return <CarteInteractivePage />;
+      case "LocaliVehicule":
+        return <LocaliVehicule />;
+      case "PersonnTemp":
+        return <PersonnTemp />;
+      case "GeneratePayroll":
+        return <GeneratePayroll />;
+      case "ZoneControl":
+        return <ZoneControl />;
+      case "GestionEmploy":
+        return <GestionEmploy />;
+      default:
+        return <h2>{t("welcome")}</h2>;
+    }
+  };
+
   return (
-    <DataProvider>
+    <EmployeeProvider>
       <div className="app-container">
         <header className="header">
           <div className="Garde">
             <img src={logo} alt="Logo" className="logo" />
             <h1>FADSGI DJIBOUTI</h1>
-
-            
           </div>
           <div className="user-info">
             <span>Ali Mohamed Yacoub</span>
@@ -144,21 +164,15 @@ function App() {
                 <option value="en">{t("english")}</option>
               </select>
             </div>
-
-
-
-        <div className="search-container">
-          
-          <div className="icons">
-            <span className="icon">🔔</span>
-            <span className="icon">⚙️</span>
-            
-          </div>
-        </div>
-        <button className="logout-button">
-        <span className="icon">👤</span>
-         </button>
-
+            <div className="search-container">
+              <div className="icons">
+                <span className="icon">🔔</span>
+                <span className="icon">⚙️</span>
+              </div>
+            </div>
+            <button className="logout-button">
+              <span className="icon">👤</span>
+            </button>
           </div>
         </header>
 
@@ -192,34 +206,11 @@ function App() {
             ))}
           </aside>
 
-          <main className="main-content">
-            {activeItem === "Dashboard" ? (
-              <Dashboard />
-            ) : activeItem === "MapPage" ? (
-              <MapPage />
-            ) : activeItem === "CarteInteractivePage" ? (
-              <CarteInteractivePage />
-            ) : activeItem === "LocaliVehicule" ? (
-              <LocaliVehicule />
-            ) : activeItem === "PersonnTemp" ? (
-              <PersonnTemp />
-            ) : activeItem === "GeneratePayroll" ? (
-              <GeneratePayroll />
-            )
-            
-            
-            
-            : activeItem === "ZoneControl" ? (
-              <ZoneControl />
-            ) : activeItem === "GestionEmploy" ? (
-              <GestionEmploy />
-            ) : (
-              <h2>{t("welcome")}</h2>
-            )}
-          </main>
+          <main className="main-content">{renderComponent()}</main>
         </div>
       </div>
-    </DataProvider>
+    </EmployeeProvider>
+    
   );
 }
 

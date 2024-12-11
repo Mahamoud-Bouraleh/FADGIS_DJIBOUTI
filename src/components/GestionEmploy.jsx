@@ -1,37 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { FaTrash, FaEye, FaEdit } from "react-icons/fa";
 import "./GestionEmploy.css";
+import InfoDepartement from "./submenu/InfoDepartement";
 import AjoutArme from "./submenu/AjoutArme";
 import ImportListe from "./submenu/ImportListe";
 import DataTable from "react-data-table-component";
 import { Button, Input, InputGroup } from "reactstrap";
+import { EmployeeContext } from "./EmployeeContext";
 
 const GestionEmploy = () => {
+  const { employees, setEmployees } = useContext(EmployeeContext);
   const [activeTab, setActiveTab] = useState("Gestion des employés");
-  const [employeeData, setEmployeeData] = useState([
-    {
-      id: 1,
-      nom: "Jean Dupont",
-      email: "jean.dupont@example.com",
-      telephone: "0612345678",
-      departement: "Finance",
-      poste: "Analyste",
-      photo: "https://via.placeholder.com/50",
-    },
-    {
-      id: 2,
-      nom: "Marie Curie",
-      email: "marie.curie@example.com",
-      telephone: "0623456789",
-      departement: "Recherche",
-      poste: "Scientifique",
-      photo: "https://via.placeholder.com/50",
-    },
-  ]);
+
+  const handleDelete = (nom) => {
+    const updatedData = employees.filter((employee) => employee.nom !== nom);
+    setEmployees(updatedData);
+    alert("Employé supprimé !");
+  };
+
+  const handleEdit = (employee) => {
+    alert(`Modifier : ${employee.nom}`);
+  };
 
   const columns = [
     {
       name: "Photo",
-      selector: (row) => <img src={row.photo} alt="Photo" width={50} />,
+      selector: (row) => <img src={row.photo || "https://via.placeholder.com/50"} alt="Photo" width={50} />,
     },
     { name: "Nom", selector: (row) => row.nom, sortable: true },
     { name: "Email", selector: (row) => row.email, sortable: true },
@@ -46,26 +40,34 @@ const GestionEmploy = () => {
             size="sm"
             color="info"
             onClick={() => alert(`Voir : ${row.nom}`)}
+            className="action-btn"
           >
-            Voir
+            <FaEye /> Voir
           </Button>
+
+          
+          <Button
+            size="sm"
+            color="warning"
+            onClick={() => handleEdit(row)}
+            className="action-btn"
+          >
+            <FaEdit /> Modifier
+          </Button>
+
+
           <Button
             size="sm"
             color="danger"
-            onClick={() => handleDelete(row.id)}
+            onClick={() => handleDelete(row.nom)}
+            className="action-btn"
           >
-            Supprimer
+            <FaTrash /> Supprimer
           </Button>
         </div>
       ),
     },
   ];
-
-  const handleDelete = (id) => {
-    const updatedData = employeeData.filter((employee) => employee.id !== id);
-    setEmployeeData(updatedData);
-    alert("Employé supprimé !");
-  };
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -128,7 +130,7 @@ const GestionEmploy = () => {
             <DataTable
               className="table"
               columns={columns}
-              data={employeeData}
+              data={employees}
               pagination
               highlightOnHover
               striped
@@ -140,7 +142,7 @@ const GestionEmploy = () => {
         {activeTab === "Import Liste" && <ImportListe />}
         {activeTab === "Inactif Arme" && <div>Content for Inactif Arme</div>}
         {activeTab === "Info Département" && (
-          <div>Content for Info Département</div>
+          <InfoDepartement employeeData={employees} />
         )}
       </div>
     </div>

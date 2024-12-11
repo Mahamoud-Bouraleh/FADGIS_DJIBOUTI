@@ -35,6 +35,8 @@ body, html {
   font-size: 24px;
   font-weight: 600;
   text-transform: uppercase;
+  text-align: center;
+  margin: 0;
 }
 
 /* Horizontal Submenu */
@@ -88,8 +90,8 @@ button,
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  display: inline-block; /* Ensure buttons are inline */
-  margin-right: 10px; /* Add spacing between buttons */
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .btn-success {
@@ -118,7 +120,9 @@ button,
 
 /* Search Bar */
 .input-group {
-  margin-bottom: 20px; /* Add space below search bar */
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 input[type="text"],
@@ -140,8 +144,8 @@ input[type="text"],
 /* Table */
 .table {
   width: 100%;
-  max-width: 1400px; /* Increase table width */
-  margin: 20px auto; /* Center the table */
+  max-width: 1400px;
+  margin: 20px auto;
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 5px;
@@ -172,15 +176,14 @@ input[type="text"],
 }
 
 .table .actions-column {
-  display: flex; /* Utilisation de flexbox */
-  gap: 10px; /* Espacement entre les boutons */
-  justify-content: flex-start; /* Aligner les boutons à gauche */
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
 }
 
 .table .actions-column button {
-  flex-shrink: 0; /* Empêche les boutons de rétrécir */
+  flex-shrink: 0;
 }
-
 
 .table .action-icon {
   color: #007bff;
@@ -195,16 +198,17 @@ input[type="text"],
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
+  /* Responsive for Submenu */
   .submenu ul {
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center; /* Centre les éléments horizontalement */
-    display: flex; /* Assure que les éléments sont en flex */
-    align-items: center; /* Aligne les éléments verticalement */
+    justify-content: center;
   }
 
+  /* Responsive for Tables */
   .table {
     max-width: 100%;
+    margin: 10px 0;
   }
 
   .table th,
@@ -213,13 +217,31 @@ input[type="text"],
     padding: 8px;
   }
 
+  /* Adjust Search Bar */
   .input-group input {
     width: 100%;
   }
 
+  /* Responsive for Buttons */
   button,
   .btn {
-    width: 100%; /* Les boutons s'empilent en petits écrans */
+    width: 100%; /* Full width buttons for small screens */
     margin-bottom: 10px;
   }
+}
+
+/* Fix Layout on Page Load */
+.gestion-employ-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure full height layout */
+}
+
+.page-header, .submenu {
+  width: 100%;
+}
+
+/* Adjustments for Content */
+.content {
+  flex-grow: 1; /* Ensures content area takes available space */
 }

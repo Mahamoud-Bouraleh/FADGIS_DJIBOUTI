@@ -1,235 +1,320 @@
-import React, { useState, useContext } from 'react';
-import './AjoutArme.css';
-import { DataContext } from '../../context/DataContext';
+import React, { useState, useContext } from "react";
+import "./AjoutArme.css";
+import { EmployeeContext } from "../EmployeeContext";
 
 const AjoutArme = () => {
-  const { setArmeData } = useContext(DataContext);
-  const [activeStep, setActiveStep] = useState(1);
+  const { addEmployee } = useContext(EmployeeContext);
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    nom: '',
-    dateNaissance: '',
-    sexe: '',
-    tel: ''
+    nom: "",
+    sexe: "",
+    dateNaissance: "",
+    lieuNaissance: "",
+    departement: "",
+    telephone: "",
+    email: "",
+    status: "",
+    dernierDiplome: "",
+    anneeTerminee: "",
+    tuteurNom: "",
+    tuteurTelephone: "",
+    sante: "",
   });
-  const [tuteurs, setTuteurs] = useState([{ id: 1, photo: null }, { id: 2, photo: null }]);
-  const [idCounter, setIdCounter] = useState(1); // Commence à 1
 
+  const [departments] = useState([
+    "Département Informatique",
+    "Département RH",
+    "Département Logistique",
+    "Département Finance",
+  ]);
 
-  const handleStepClick = (step) => {
-    setActiveStep(step);
-  };
-
-  const handleNextStep = () => {
-    setActiveStep((prevStep) => prevStep + 1);
-  };
+  const [diplomes] = useState([
+    "BEF",
+    "BAC",
+    "Licence",
+    "Master",
+    "Doctorat",
+  ]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePhotoChange = (index, event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const updatedTuteurs = [...tuteurs];
-      updatedTuteurs[index].photo = URL.createObjectURL(file);
-      setTuteurs(updatedTuteurs);
-    }
+  const handleNextStep = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  const handleAddTuteur = () => {
-    setTuteurs([...tuteurs, { id: tuteurs.length + 1, photo: null }]);
+  const handlePreviousStep = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setArmeData(formData);
-    alert("Arme data saved!");
+    // Validate all fields
+    if (!formData.nom || !formData.sexe || !formData.dateNaissance || !formData.lieuNaissance || !formData.departement || !formData.telephone || !formData.email || !formData.status || !formData.dernierDiplome || !formData.anneeTerminee || !formData.tuteurNom || !formData.tuteurTelephone || !formData.sante) {
+      alert("Veuillez remplir tous les champs obligatoires !");
+      return;
+    }
+
+    addEmployee(formData);
+    alert("Employé ajouté avec succès !");
+
+    // Reset the form
+    setFormData({
+      nom: "",
+      sexe: "",
+      dateNaissance: "",
+      lieuNaissance: "",
+      departement: "",
+      telephone: "",
+      email: "",
+      status: "",
+      dernierDiplome: "",
+      anneeTerminee: "",
+      tuteurNom: "",
+      tuteurTelephone: "",
+      sante: "",
+    });
+    setCurrentStep(1);
   };
 
   return (
     <div className="ajout-arme-page">
       <header className="page-header">
-        <h1>Enregistrement de l'Arme</h1>
+        <h1>Ajouter un Employé</h1>
       </header>
 
-      <div className="content">
-        <aside className="steps">
-          {[1, 2, 3, 4, 5].map((step) => (
-            <div
-              key={step}
-              className={`step ${activeStep === step ? 'active' : ''}`}
-              onClick={() => handleStepClick(step)}
-            >
-              <span>Step {step}</span>
-              {step === 1 ? "Info l'arm" : step === 2 ? "Info nouveaux etudier" : step === 3 ? "Tuteur" : step === 4 ? "Parents" : "Santé"}
+      <form className="info-form" onSubmit={handleSubmit}>
+        {currentStep === 1 && (
+          <div className="form-row">
+            <div className="form-group">
+              <label>Nom*</label>
+              <input
+                type="text"
+                name="nom"
+                placeholder="Nom de l'employé"
+                required
+                onChange={handleInputChange}
+                value={formData.nom}
+              />
             </div>
-          ))}
-        </aside>
-
-        <div className="form-section">
-  {activeStep === 1 && (
-    <div>
-      <h2>Info l'arm</h2>
-      <p>Remplir toutes les informations</p>
-      <form className="info-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label>ID Employé (Emid)*</label>
-            <input
-              type="text"
-              name="Emid"
-              value={formData.Emid || `FADSRH${String(idCounter).padStart(6, '0')}`}
-              readOnly
-            />
-          </div>
-          <div className="form-group">
-            <label>Nom*</label>
-            <input
-              type="text"
-              name="nom"
-              placeholder="Nom de l'élève"
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Sexe*</label>
-            <select name="sexe" required onChange={handleInputChange}>
-              <option value="">Sélectionner...</option>
-              <option value="male">Masculin</option>
-              <option value="female">Féminin</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Date de naissance*</label>
-            <input
-              type="date"
-              name="dateNaissance"
-              required
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <button type="button" className="next-button" onClick={handleNextStep}>
-          Aller suite
-        </button>
-      </form>
-    </div>
-  )}
-</div>
-<div>
-
-          {activeStep === 2 && (
-            <div>
-              <h2>Info nouveaux etudier</h2>
-              <p>Remplir toutes les informations ci-dessous</p>
-              <form className="info-form">
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Année terminer etudier *</label>
-                    <select required>
-                      <option value="">Sélectionner...</option>
-                      <option value="2024-2025">2024-2025</option>
-                      <option value="2023-2024">2023-2024</option>
-                      <option value="2022-2023">2022-2023</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="button" className="next-button" onClick={handleNextStep}>
-                  Aller suite
-                </button>
-              </form>
+            <div className="form-group">
+              <label>Sexe*</label>
+              <select
+                name="sexe"
+                required
+                value={formData.sexe}
+                onChange={handleInputChange}
+              >
+                <option value="">Sélectionner...</option>
+                <option value="Homme">Homme</option>
+                <option value="Femme">Femme</option>
+              </select>
             </div>
-          )}
-
-          {activeStep === 3 && (
-            <div>
-              <h2>Tuteur</h2>
-              <p>Remplir toutes les informations ci-dessous</p>
-              <form className="tuteur-form">
-                {tuteurs.map((tuteur, index) => (
-                  <div key={tuteur.id} className="tuteur-row">
-                    <div className="form-group">
-                      <label>Nom*</label>
-                      <input type="text" required />
-                    </div>
-                    <div className="form-group">
-                      <label>E-mail</label>
-                      <input type="email" />
-                    </div>
-                    <div className="form-group">
-                      <label>Téléphone</label>
-                      <input type="tel" />
-                    </div>
-                    <div className="form-group">
-                      <label>Relation*</label>
-                      <input type="text" required />
-                    </div>
-                    <div className="form-group">
-                      <label>Photo*</label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(event) => handlePhotoChange(index, event)}
-                      />
-                      {tuteur.photo && (
-                        <img
-                          src={tuteur.photo}
-                          alt={`Tuteur ${index + 1}`}
-                          className="photo-preview"
-                        />
-                      )}
-                    </div>
-                  </div>
+            <div className="form-group">
+              <label>Date de naissance*</label>
+              <input
+                type="date"
+                name="dateNaissance"
+                required
+                onChange={handleInputChange}
+                value={formData.dateNaissance}
+              />
+            </div>
+            <div className="form-group">
+              <label>Lieu de naissance*</label>
+              <input
+                type="text"
+                name="lieuNaissance"
+                placeholder="Lieu de naissance"
+                required
+                onChange={handleInputChange}
+                value={formData.lieuNaissance}
+              />
+            </div>
+            <div className="form-group">
+              <label>Téléphone*</label>
+              <input
+                type="tel"
+                name="telephone"
+                placeholder="Numéro de téléphone"
+                required
+                onChange={handleInputChange}
+                value={formData.telephone}
+              />
+            </div>
+            <div className="form-group">
+              <label>Email*</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email de l'employé"
+                required
+                onChange={handleInputChange}
+                value={formData.email}
+              />
+            </div>
+            <div className="form-group">
+              <label>Département*</label>
+              <select
+                name="departement"
+                required
+                value={formData.departement}
+                onChange={handleInputChange}
+              >
+                <option value="">Sélectionner...</option>
+                {departments.map((dept, index) => (
+                  <option key={index} value={dept}>
+                    {dept}
+                  </option>
                 ))}
-                <button type="button" className="add-tuteur-button" onClick={handleAddTuteur}>
-                  Ajouter un parent +
-                </button>
-                <button type="button" className="next-button" onClick={handleNextStep}>
-                  Aller suite
-                </button>
-              </form>
+              </select>
             </div>
-          )}
+            <div className="form-group">
+              <label>Status*</label>
+              <select
+                name="status"
+                required
+                value={formData.status}
+                onChange={handleInputChange}
+              >
+                <option value="">Sélectionner...</option>
+                <option value="Actif">Actif</option>
+                <option value="Inactif">Inactif</option>
+              </select>
+            </div>
+            <button type="button" className="next-button" onClick={handleNextStep}>
+              Suivant
+            </button>
+          </div>
+        )}
 
-          {activeStep === 4 && (
-            <div>
-              <h2>Parents</h2>
-              <p>Remplir toutes les informations</p>
-              <form className="parents-form">
-                {/* Add necessary form fields here */}
-                <button type="button" className="next-button" onClick={handleNextStep}>
-                  Aller à la santé
-                </button>
-              </form>
+        {currentStep === 2 && (
+          <div className="form-row">
+            <div className="form-group">
+              <label>Dernière année d'étude*</label>
+              <input
+                type="number"
+                name="anneeTerminee"
+                placeholder="Ex : 2023"
+                required
+                onChange={handleInputChange}
+                value={formData.anneeTerminee}
+              />
             </div>
-          )}
+            <div className="form-group">
+              <label>Diplôme*</label>
+              <select
+                name="dernierDiplome"
+                required
+                value={formData.dernierDiplome}
+                onChange={handleInputChange}
+              >
+                <option value="">Sélectionner...</option>
+                {diplomes.map((diplome, index) => (
+                  <option key={index} value={diplome}>
+                    {diplome}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-navigation">
+              <button type="button" className="previous-button" onClick={handlePreviousStep}>
+                Retour
+              </button>
+              <button type="button" className="next-button" onClick={handleNextStep}>
+                Suivant
+              </button>
+            </div>
+          </div>
+        )}
 
-          {activeStep === 5 && (
-            <div>
-              <h2>Santé</h2>
-              <form className="sante-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Info santé</label>
-                  <textarea placeholder="Entrez les informations de santé ici..." rows="5"></textarea>
-                </div>
-                <div className="form-navigation">
-                  <button type="button" className="back-button" onClick={() => setActiveStep(4)}>
-                    Retour à l'information sur les parents
-                  </button>
-                  <button type="submit" className="save-button">
-                    Sauvegarder
-                  </button>
-                </div>
-              </form>
+        {currentStep === 3 && (
+          <div className="form-row">
+            <div className="form-group">
+              <label>Nom du Tuteur 1</label>
+              <input
+                type="text"
+                name="tuteurNom"
+                placeholder="Nom du tuteur"
+                required
+                onChange={handleInputChange}
+                value={formData.tuteurNom}
+              />
             </div>
-          )}
-        </div>
-      </div>
+            <div className="form-group">
+              <label>Téléphone du Tuteur*</label>
+              <input
+                type="tel"
+                name="tuteurTelephone"
+                placeholder="Téléphone du tuteur"
+                required
+                onChange={handleInputChange}
+                value={formData.tuteurTelephone}
+              />
+            </div>
+
+
+            <div className="form-group">
+              <label>Nom du Tuteur 2 *</label>
+              <input
+                type="text"
+                name="tuteurNom"
+                placeholder="Nom du tuteur"
+                required
+                onChange={handleInputChange}
+                value={formData.tuteurNom}
+              />
+            </div>
+            <div className="form-group">
+              <label>Téléphone du Tuteur*</label>
+              <input
+                type="tel"
+                name="tuteurTelephone"
+                placeholder="Téléphone du tuteur"
+                required
+                onChange={handleInputChange}
+                value={formData.tuteurTelephone}
+              />
+            </div>
+            <div className="form-navigation">
+              <button type="button" className="previous-button" onClick={handlePreviousStep}>
+                Retour
+              </button>
+              <button type="button" className="next-button" onClick={handleNextStep}>
+                Suivant
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 4 && (
+          <div className="form-row">
+            <div className="form-group">
+              <label>Santé*</label>
+              <textarea
+                name="sante"
+                placeholder="Décrivez l'état de santé de l'employé"
+                required
+                rows="4"
+                onChange={handleInputChange}
+                value={formData.sante}
+              />
+            </div>
+            <div className="form-navigation">
+              <button type="button" className="previous-button" onClick={handlePreviousStep}>
+                Retour
+              </button>
+              <button type="submit" className="save-button">
+                Enregistrer
+              </button>
+            </div>
+          </div>
+        )}
+      </form>
     </div>
   );
 };
 
 export default AjoutArme;
-

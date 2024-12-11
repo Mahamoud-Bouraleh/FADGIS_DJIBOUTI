@@ -1,4 +1,5 @@
 import React from "react";
+import * as XLSX from "xlsx"; // Import the library for exporting Excel files
 import "./GeneratePayroll.css";
 
 const payrollData = [
@@ -57,6 +58,73 @@ const payrollData = [
 ];
 
 const GeneratePayroll = () => {
+  // Function to export data to Excel
+  const exportToExcel = () => {
+    const headers = [
+      "EMPID",
+      "Employee Name",
+      "Base Salary",
+      "Retirement Contr 4%",
+      "AMU Contr 2%",
+      "Deduction 15.7%",
+      "CNSS 21.7%",
+      "Taxable Wages",
+      "ITS",
+      "Net Salary",
+    ];
+
+    const data = payrollData.map((item) => [
+      item.empId,
+      item.employeeName,
+      item.baseSalary,
+      item.retirementContribution,
+      item.amuContribution,
+      item.deduction,
+      item.cnss,
+      item.taxableWages,
+      item.its,
+      item.netSalary,
+    ]);
+
+    // Combine headers and data
+    const worksheetData = [["Generate Liste Payroll"], headers, ...data];
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Merge cells for the title
+    worksheet["!merges"] = [
+      {
+        s: { r: 0, c: 0 }, // Start cell (row 0, column 0)
+        e: { r: 0, c: headers.length - 1 }, // End cell (row 0, last column)
+      },
+    ];
+
+    // Style the title row
+    worksheet["A1"].s = {
+      font: { bold: true, sz: 14 },
+      alignment: { horizontal: "center" },
+    };
+
+    // Style headers
+    headers.forEach((_, index) => {
+      const cellRef = XLSX.utils.encode_cell({ r: 1, c: index });
+      if (!worksheet[cellRef]) return;
+      worksheet[cellRef].s = {
+        font: { bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: "D9EAD3" } },
+        alignment: { horizontal: "center" },
+      };
+    });
+
+    // Create a workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Payroll Report");
+
+    // Export the workbook as an Excel file
+    XLSX.writeFile(workbook, "Payroll_Report.xlsx");
+  };
+
   return (
     <div className="payroll-container">
       <div className="header">
@@ -81,7 +149,9 @@ const GeneratePayroll = () => {
           placeholder="Search Employee"
           className="search-input"
         />
-        <button className="btn export-btn">Export Report</button>
+        <button className="btn export-btn" onClick={exportToExcel}>
+          Export Report
+        </button>
       </div>
 
       <table className="payroll-table">

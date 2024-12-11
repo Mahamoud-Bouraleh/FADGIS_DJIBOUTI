@@ -1,0 +1,141 @@
+.info-department-page {
+  padding: 20px;
+}
+
+.page-header h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-department-form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.create-department-form .form-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.department-input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.create-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}
+
+.department-list {
+  margin-top: 20px;
+}
+
+.department-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.department-table th,
+.department-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.department-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.view-button,
+.delete-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-button {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.view-button:hover {
+  background-color: #117a8b;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #a71d2a;
+}
+
+.department-section {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.department-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.employee-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.employee-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: calc(33.33% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employee-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.employee-info {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.employee-name {
+  font-weight: bold;
+}
+
+.employee-email,
+.employee-position {
+  font-size: 14px;
+  color: #555;
+}

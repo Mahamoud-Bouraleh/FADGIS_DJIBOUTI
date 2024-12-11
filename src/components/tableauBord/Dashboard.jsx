@@ -5,39 +5,41 @@ import { FaUsers, FaBuilding, FaMoneyBill, FaShieldAlt } from "react-icons/fa"; 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-
-
       <section className="stats-cards">
-        <div id="card1">
+        <div id="card1" className="card">
           <div className="icon-container">
             <FaUsers size={40} className="icon" />
           </div>
           <h3>Nombre des employés</h3>
           <p>281</p>
+          <div className="separator"></div> {/* Ligne séparatrice */}
           <span className="growth">+55% par rapport à la semaine dernière</span>
         </div>
-        <div  id="card2">
+        <div id="card2" className="card">
           <div className="icon-container">
             <FaBuilding size={40} className="icon" />
           </div>
           <h3>Nombre des départements</h3>
           <p>2,300</p>
+          <div className="separator"></div> {/* Ligne séparatrice */}
           <span className="growth">+3% par rapport au mois dernier</span>
         </div>
-        <div  id="card3">
+        <div id="card3" className="card">
           <div className="icon-container">
             <FaMoneyBill size={40} className="icon" />
           </div>
           <h3>Nombre total des salaires</h3>
           <p>34k</p>
+          <div className="separator"></div> {/* Ligne séparatrice */}
           <span className="growth">+1% par rapport à hier</span>
         </div>
-        <div  id="card4">
+        <div id="card4" className="card">
           <div className="icon-container">
             <FaShieldAlt size={40} className="icon" />
           </div>
           <h3>Nombre de contrôles</h3>
           <p>+91</p>
+          <div className="separator"></div> {/* Ligne séparatrice */}
           <span className="growth">Mis à jour récemment</span>
         </div>
       </section>
@@ -54,7 +56,6 @@ const Dashboard = () => {
           <p>Mise à jour il y a 4 minutes</p>
         </div>
       </section>
-
     </div>
   );
 };
