@@ -1,24 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./InfoDepartement.css";
 
 const InfoDepartement = ({ employeeData = [] }) => {
-  const [departments, setDepartments] = useState(() =>
-    employeeData.reduce((acc, employee) => {
+  // Charger les départements depuis localStorage au démarrage
+  const loadDepartmentsFromStorage = () => {
+    const storedDepartments = localStorage.getItem("departments");
+    if (storedDepartments) {
+      return JSON.parse(storedDepartments);  // Charger les départements stockés
+    }
+    return employeeData.reduce((acc, employee) => {
       const { departement } = employee;
       if (!acc[departement]) {
         acc[departement] = [];
       }
       acc[departement].push(employee);
       return acc;
-    }, {})
-  );
+    }, {});
+  };
 
+  const [departments, setDepartments] = useState(loadDepartmentsFromStorage);
   const [newDepartment, setNewDepartment] = useState("");
+
+  // Sauvegarder les départements dans localStorage chaque fois qu'ils changent
+  useEffect(() => {
+    localStorage.setItem("departments", JSON.stringify(departments));
+  }, [departments]); // Quand 'departments' change, on met à jour localStorage
 
   // Handle department creation
   const handleCreateDepartment = () => {
     if (newDepartment && !departments[newDepartment]) {
-      setDepartments((prev) => ({ ...prev, [newDepartment]: [] }));
+      setDepartments((prev) => {
+        const updatedDepartments = { ...prev, [newDepartment]: [] };
+        return updatedDepartments;
+      });
       setNewDepartment("");
     }
   };
@@ -87,9 +101,6 @@ const InfoDepartement = ({ employeeData = [] }) => {
           </tbody>
         </table>
       </div>
-
-      {/* Employee details per department */}
-
     </div>
   );
 };

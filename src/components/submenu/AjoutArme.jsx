@@ -16,8 +16,10 @@ const AjoutArme = () => {
     status: "",
     dernierDiplome: "",
     anneeTerminee: "",
-    tuteurNom: "",
-    tuteurTelephone: "",
+    tuteurNom1: "",
+    tuteurTelephone1: "",
+    tuteurNom2: "",
+    tuteurTelephone2: "",
     sante: "",
   });
 
@@ -52,7 +54,23 @@ const AjoutArme = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validate all fields
-    if (!formData.nom || !formData.sexe || !formData.dateNaissance || !formData.lieuNaissance || !formData.departement || !formData.telephone || !formData.email || !formData.status || !formData.dernierDiplome || !formData.anneeTerminee || !formData.tuteurNom || !formData.tuteurTelephone || !formData.sante) {
+    if (
+      !formData.nom ||
+      !formData.sexe ||
+      !formData.dateNaissance ||
+      !formData.lieuNaissance ||
+      !formData.departement ||
+      !formData.telephone ||
+      !formData.email ||
+      !formData.status ||
+      !formData.dernierDiplome ||
+      !formData.anneeTerminee ||
+      !formData.tuteurNom1 ||
+      !formData.tuteurTelephone1 ||
+      !formData.tuteurNom2 ||
+      !formData.tuteurTelephone2 ||
+      !formData.sante
+    ) {
       alert("Veuillez remplir tous les champs obligatoires !");
       return;
     }
@@ -72,8 +90,10 @@ const AjoutArme = () => {
       status: "",
       dernierDiplome: "",
       anneeTerminee: "",
-      tuteurNom: "",
-      tuteurTelephone: "",
+      tuteurNom1: "",
+      tuteurTelephone1: "",
+      tuteurNom2: "",
+      tuteurTelephone2: "",
       sante: "",
     });
     setCurrentStep(1);
@@ -233,49 +253,47 @@ const AjoutArme = () => {
         {currentStep === 3 && (
           <div className="form-row">
             <div className="form-group">
-              <label>Nom du Tuteur 1</label>
+              <label>Nom du Tuteur 1*</label>
               <input
                 type="text"
-                name="tuteurNom"
+                name="tuteurNom1"
                 placeholder="Nom du tuteur"
                 required
                 onChange={handleInputChange}
-                value={formData.tuteurNom}
+                value={formData.tuteurNom1}
               />
             </div>
             <div className="form-group">
-              <label>Téléphone du Tuteur*</label>
+              <label>Téléphone du Tuteur 1*</label>
               <input
                 type="tel"
-                name="tuteurTelephone"
+                name="tuteurTelephone1"
                 placeholder="Téléphone du tuteur"
                 required
                 onChange={handleInputChange}
-                value={formData.tuteurTelephone}
+                value={formData.tuteurTelephone1}
               />
             </div>
-
-
             <div className="form-group">
-              <label>Nom du Tuteur 2 *</label>
+              <label>Nom du Tuteur 2*</label>
               <input
                 type="text"
-                name="tuteurNom"
+                name="tuteurNom2"
                 placeholder="Nom du tuteur"
                 required
                 onChange={handleInputChange}
-                value={formData.tuteurNom}
+                value={formData.tuteurNom2}
               />
             </div>
             <div className="form-group">
-              <label>Téléphone du Tuteur*</label>
+              <label>Téléphone du Tuteur 2*</label>
               <input
                 type="tel"
-                name="tuteurTelephone"
+                name="tuteurTelephone2"
                 placeholder="Téléphone du tuteur"
                 required
                 onChange={handleInputChange}
-                value={formData.tuteurTelephone}
+                value={formData.tuteurTelephone2}
               />
             </div>
             <div className="form-navigation">

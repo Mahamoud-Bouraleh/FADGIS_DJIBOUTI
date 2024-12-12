@@ -22,8 +22,14 @@ export const EmployeeProvider = ({ children }) => {
     ]);
   };
 
+  const removeEmployee = (id) => {
+    setEmployees((prevEmployees) =>
+      prevEmployees.filter((employee) => employee.id !== id)
+    );
+  };
+
   return (
-    <EmployeeContext.Provider value={{ employees, addEmployee }}>
+    <EmployeeContext.Provider value={{ employees, addEmployee, removeEmployee, setEmployees }}>
       {children}
     </EmployeeContext.Provider>
   );

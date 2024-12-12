@@ -229,6 +229,15 @@ input[type="text"],
     margin-bottom: 10px;
   }
 }
+/* Blue Button for Voir */
+.btn-info {
+  background-color: #007bff; /* Blue color */
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
 
 /* Fix Layout on Page Load */
 .gestion-employ-page {

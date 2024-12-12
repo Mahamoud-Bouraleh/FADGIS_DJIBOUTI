@@ -11,11 +11,22 @@ import { EmployeeContext } from "./EmployeeContext";
 const GestionEmploy = () => {
   const { employees, setEmployees } = useContext(EmployeeContext);
   const [activeTab, setActiveTab] = useState("Gestion des employés");
+  const [searchTerm, setSearchTerm] = useState(""); // Pour la recherche
+
+  // Filtrer les employés en fonction de la recherche
+  const filteredEmployees = employees.filter((employee) => 
+    employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.telephone.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.departement.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDelete = (nom) => {
-    const updatedData = employees.filter((employee) => employee.nom !== nom);
-    setEmployees(updatedData);
-    alert("Employé supprimé !");
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer ${nom} ?`)) {
+      const updatedData = employees.filter((employee) => employee.nom !== nom);
+      setEmployees(updatedData);
+      alert("Employé supprimé définitivement !");
+    }
   };
 
   const handleEdit = (employee) => {
@@ -45,7 +56,6 @@ const GestionEmploy = () => {
             <FaEye /> Voir
           </Button>
 
-          
           <Button
             size="sm"
             color="warning"
@@ -54,7 +64,6 @@ const GestionEmploy = () => {
           >
             <FaEdit /> Modifier
           </Button>
-
 
           <Button
             size="sm"
@@ -120,7 +129,11 @@ const GestionEmploy = () => {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="d-flex w-100">
                 <InputGroup className="mb-3 flex-grow-1 me-2">
-                  <Input placeholder="Rechercher ici" />
+                  <Input
+                    placeholder="Rechercher ici"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)} // Mise à jour du terme de recherche
+                  />
                 </InputGroup>
                 <Button className="btn-success me-2">Excel</Button>
                 <Button color="primary">Imprimer</Button>
@@ -130,7 +143,7 @@ const GestionEmploy = () => {
             <DataTable
               className="table"
               columns={columns}
-              data={employees}
+              data={filteredEmployees} // Utiliser les employés filtrés
               pagination
               highlightOnHover
               striped
