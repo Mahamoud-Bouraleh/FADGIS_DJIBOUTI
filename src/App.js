@@ -11,6 +11,10 @@ import GestionEmploy from "./components/GestionEmploy";
 import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
 import { EmployeeProvider } from "./components/EmployeeContext";
 import GeneratePayroll from "./components/submenu/GeneratePayroll";
+import FormationPage from "./components/FormationPage";
+import Planification from "./components/Planification";
+
+
 
 import {
   FaUser,
@@ -45,13 +49,14 @@ function App() {
       title: t("humanResources"),
       icon: <FaUser />,
       subItems: [
-        { name: t("training"), component: null },
-        { name: t("scheduling"), component: null },
+        { name: t("training"), component: "FormationPage" }, // Relier ici
+        { name: t("scheduling"), component: "Planification" },
         { name: t("employeeManagement"), component: "GestionEmploy" },
         { name: t("militaryOps"), component: null },
         { name: t("teamAssignment"), component: null },
       ],
     },
+    
     {
       title: t("payrol"),
       icon: <FaMoneyBillWave />,
@@ -139,10 +144,16 @@ function App() {
         return <ZoneControl />;
       case "GestionEmploy":
         return <GestionEmploy />;
+      case "FormationPage": // Nouveau cas
+        return <FormationPage />;
+
+        case "Planification": // Nouveau cas
+        return <Planification />;
       default:
-        return <h2>{t("welcome")}</h2>;
+        return <Planification/>;
     }
   };
+  
 
   return (
     <EmployeeProvider>

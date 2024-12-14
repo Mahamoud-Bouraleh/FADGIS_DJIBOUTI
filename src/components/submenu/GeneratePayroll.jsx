@@ -8,56 +8,52 @@ const payrollData = [
     empId: "FRS00012",
     employeeName: "Jamal Omar Mohamed",
     baseSalary: 20000.0,
-    retirementContribution: 0.0,
-    amuContribution: 0.0,
-    deduction: 0.0,
-    cnss: 0.0,
-    taxableWages: 0.0,
-    its: 0.0,
-    netSalary: 20000.0,
   },
   {
     id: 2,
     empId: "FRS00010",
     employeeName: "Mumino Omar Said",
     baseSalary: 30000.0,
-    retirementContribution: 0.0,
-    amuContribution: 0.0,
-    deduction: 0.0,
-    cnss: 0.0,
-    taxableWages: 0.0,
-    its: 0.0,
-    netSalary: 30000.0,
   },
   {
     id: 3,
     empId: "FRS00011",
     employeeName: "Umeyma Mohamed Ibrahim",
     baseSalary: 35000.0,
-    retirementContribution: 0.0,
-    amuContribution: 0.0,
-    deduction: 0.0,
-    cnss: 0.0,
-    taxableWages: 0.0,
-    its: 0.0,
-    netSalary: 35000.0,
   },
   {
     id: 4,
     empId: "FRS00007",
     employeeName: "Raho Abdoulkader Ismael",
     baseSalary: 63191.0,
-    retirementContribution: 2527.64,
-    amuContribution: 1263.82,
-    deduction: 9920.99,
-    cnss: 13712.45,
-    taxableWages: 59399.54,
-    its: 4400.0,
-    netSalary: 54999.54,
   },
 ];
 
+const calculatePayroll = (employee) => {
+  const retirementContribution = employee.baseSalary * 0.04;
+  const amuContribution = employee.baseSalary * 0.02;
+  const deduction = employee.baseSalary * 0.157;
+  const cnss = employee.baseSalary * 0.217;
+  const taxableWages = employee.baseSalary - (retirementContribution + amuContribution + deduction + cnss);
+  const its = taxableWages > 0 ? 0.1 * taxableWages : 0; // Example tax (10% on taxable wages)
+  const netSalary = taxableWages - its;
+
+  return {
+    ...employee,
+    retirementContribution,
+    amuContribution,
+    deduction,
+    cnss,
+    taxableWages,
+    its,
+    netSalary,
+  };
+};
+
 const GeneratePayroll = () => {
+  // Calculate payroll for all employees
+  const calculatedPayroll = payrollData.map(calculatePayroll);
+
   // Function to export data to Excel
   const exportToExcel = () => {
     const headers = [
@@ -73,17 +69,17 @@ const GeneratePayroll = () => {
       "Net Salary",
     ];
 
-    const data = payrollData.map((item) => [
+    const data = calculatedPayroll.map((item) => [
       item.empId,
       item.employeeName,
       item.baseSalary,
-      item.retirementContribution,
-      item.amuContribution,
-      item.deduction,
-      item.cnss,
-      item.taxableWages,
-      item.its,
-      item.netSalary,
+      item.retirementContribution.toFixed(2),
+      item.amuContribution.toFixed(2),
+      item.deduction.toFixed(2),
+      item.cnss.toFixed(2),
+      item.taxableWages.toFixed(2),
+      item.its.toFixed(2),
+      item.netSalary.toFixed(2),
     ]);
 
     // Combine headers and data
@@ -99,23 +95,6 @@ const GeneratePayroll = () => {
         e: { r: 0, c: headers.length - 1 }, // End cell (row 0, last column)
       },
     ];
-
-    // Style the title row
-    worksheet["A1"].s = {
-      font: { bold: true, sz: 14 },
-      alignment: { horizontal: "center" },
-    };
-
-    // Style headers
-    headers.forEach((_, index) => {
-      const cellRef = XLSX.utils.encode_cell({ r: 1, c: index });
-      if (!worksheet[cellRef]) return;
-      worksheet[cellRef].s = {
-        font: { bold: true },
-        fill: { patternType: "solid", fgColor: { rgb: "D9EAD3" } },
-        alignment: { horizontal: "center" },
-      };
-    });
 
     // Create a workbook
     const workbook = XLSX.utils.book_new();
@@ -171,7 +150,7 @@ const GeneratePayroll = () => {
           </tr>
         </thead>
         <tbody>
-          {payrollData.map((employee, index) => (
+          {calculatedPayroll.map((employee, index) => (
             <tr key={employee.id}>
               <td>{index + 1}</td>
               <td>{employee.empId}</td>

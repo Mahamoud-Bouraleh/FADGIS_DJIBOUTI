@@ -53,27 +53,47 @@ const AjoutArme = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate all fields
-    if (
-      !formData.nom ||
-      !formData.sexe ||
-      !formData.dateNaissance ||
-      !formData.lieuNaissance ||
-      !formData.departement ||
-      !formData.telephone ||
-      !formData.email ||
-      !formData.status ||
-      !formData.dernierDiplome ||
-      !formData.anneeTerminee ||
-      !formData.tuteurNom1 ||
-      !formData.tuteurTelephone1 ||
-      !formData.tuteurNom2 ||
-      !formData.tuteurTelephone2 ||
-      !formData.sante
-    ) {
-      alert("Veuillez remplir tous les champs obligatoires !");
-      return;
-    }
+
+    fetch("http://localhost:000/ajouter-employe", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+  })
+  .then((response) => response.json())  // Récupérer la réponse JSON pour mieux comprendre l'erreur
+  .then((data) => {
+      if (data.success) {
+          alert("Employé ajouté avec succès !");
+          // Reset form data
+          setFormData({
+              nom: "",
+              sexe: "",
+              dateNaissance: "",
+              lieuNaissance: "",
+              departement: "",
+              telephone: "",
+              email: "",
+              status: "",
+              dernierDiplome: "",
+              anneeTerminee: "",
+              tuteurNom1: "",
+              tuteurTelephone1: "",
+              tuteurNom2: "",
+              tuteurTelephone2: "",
+              sante: "",
+          });
+          setCurrentStep(1);
+      } else {
+          alert("Erreur lors de l'ajout de l'employé : " + data.message);
+      }
+  })
+  .catch((err) => {
+      console.error("Erreur réseau ou serveur : ", err);
+      alert("Erreur lors de l'envoi des données au serveur.");
+  });
+  
+  
 
     addEmployee(formData);
     alert("Employé ajouté avec succès !");

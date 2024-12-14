@@ -1,0 +1,106 @@
+.planification-page {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Empêche les débordements visuels */
+}
+
+.planification-page h2 {
+    background-color:  #ffffff;
+    color: #201e1e;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px 12px 0 0; /* Arrondit uniquement le haut du conteneur */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Supprime l'espacement par défaut */
+}
+
+
+.planification-page header {
+    background-color: #2980b9;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+
+
+.planification-page header h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.submenu {
+    background-color: #e0e0e0;
+    padding: 10px 0;
+    margin-top: 0 auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 12px 12px;
+    margin-bottom: 20px;
+}
+
+.submenu ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.submenu ul li {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.submenu ul li.active {
+    background-color: #1abc9c;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-weight: bold;
+}
+
+.submenu ul li:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+.tab-content {
+    padding: 50px;
+    height: 100%;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    color: #34495e;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+/* Ajout de styles pour le responsive design */
+@media (max-width: 768px) {
+    .submenu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .submenu ul li {
+        margin: 5px 0;
+        width: 90%;
+        text-align: center;
+    }
+}
