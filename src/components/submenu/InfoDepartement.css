@@ -89,6 +89,16 @@
 .delete-button:hover {
   background-color: #a71d2a;
 }
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+  background-color: #d4edda;
+  padding: 10px;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+}
+
 
 .department-section {
   margin-top: 30px;

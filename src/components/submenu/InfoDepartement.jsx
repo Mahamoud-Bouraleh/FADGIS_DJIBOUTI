@@ -1,40 +1,49 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./InfoDepartement.css";
 
-const InfoDepartement = ({ employeeData = [] }) => {
-  // Charger les départements depuis localStorage au démarrage
-  const loadDepartmentsFromStorage = () => {
-    const storedDepartments = localStorage.getItem("departments");
-    if (storedDepartments) {
-      return JSON.parse(storedDepartments);  // Charger les départements stockés
+const InfoDepartement = () => {
+  const [departments, setDepartments] = useState([]); // État pour stocker les départements
+  const [newDepartment, setNewDepartment] = useState(""); // Nouvel input pour ajouter un département
+  const [successMessage, setSuccessMessage] = useState(""); // État pour afficher le message de succès
+
+  // Charger les départements depuis l'API
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/departements") // Assurez-vous que l'API renvoie des objets {id, nom}
+      .then((response) => setDepartments(response.data))
+      .catch((error) => console.error("Erreur lors du chargement :", error));
+  }, []);
+
+  // Ajouter un département
+  const handleCreateDepartment = () => {
+    if (newDepartment) {
+      axios
+        .post("http://localhost:5000/departements", { nom: newDepartment }) // Envoie seulement { nom }
+        .then((response) => {
+          setDepartments([...departments, response.data]); // Ajouter la réponse du serveur (id, nom)
+          setNewDepartment(""); // Réinitialise le champ
+          setSuccessMessage("Département ajouté avec succès!"); // Afficher le message de succès
+          
+          // Masquer le message après 3 secondes
+          setTimeout(() => setSuccessMessage(""), 3000);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'ajout :", error);
+          setSuccessMessage("Erreur lors de l'ajout du département.");
+          setTimeout(() => setSuccessMessage(""), 3000);
+        });
     }
-    return employeeData.reduce((acc, employee) => {
-      const { departement } = employee;
-      if (!acc[departement]) {
-        acc[departement] = [];
-      }
-      acc[departement].push(employee);
-      return acc;
-    }, {});
   };
 
-  const [departments, setDepartments] = useState(loadDepartmentsFromStorage);
-  const [newDepartment, setNewDepartment] = useState("");
-
-  // Sauvegarder les départements dans localStorage chaque fois qu'ils changent
-  useEffect(() => {
-    localStorage.setItem("departments", JSON.stringify(departments));
-  }, [departments]); // Quand 'departments' change, on met à jour localStorage
-
-  // Handle department creation
-  const handleCreateDepartment = () => {
-    if (newDepartment && !departments[newDepartment]) {
-      setDepartments((prev) => {
-        const updatedDepartments = { ...prev, [newDepartment]: [] };
-        return updatedDepartments;
-      });
-      setNewDepartment("");
-    }
+  // Supprimer un département
+  const handleDeleteDepartment = (id) => {
+    axios
+      .delete(`http://localhost:5000/departements/${id}`) // Envoie l'ID à supprimer
+      .then(() => {
+        setDepartments(departments.filter((dept) => dept.id !== id)); // Met à jour la liste
+      })
+      .catch((error) => console.error("Erreur lors de la suppression :", error));
   };
 
   return (
@@ -43,7 +52,7 @@ const InfoDepartement = ({ employeeData = [] }) => {
         <h2>Gestion des Départements</h2>
       </header>
 
-      {/* Form to add a new department */}
+      {/* Formulaire pour ajouter un département */}
       <div className="create-department-form">
         <h3>Créer un Nouveau Département</h3>
         <div className="form-group">
@@ -60,37 +69,28 @@ const InfoDepartement = ({ employeeData = [] }) => {
         </div>
       </div>
 
-      {/* Department list */}
+      {/* Affichage du message de succès */}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+
+      {/* Liste des départements */}
       <div className="department-list">
         <h3>Liste des Départements</h3>
         <table className="department-table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nom du Département</th>
-              <th>Nombre d'Employés</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {Object.keys(departments).map((dept) => (
-              <tr key={dept}>
-                <td>{dept}</td>
-                <td>{departments[dept].length}</td>
+            {departments.map((dept) => (
+              <tr key={dept.id}>
+                <td>{dept.id}</td>
+                <td>{dept.nom}</td>
                 <td>
                   <button
-                    onClick={() => alert(`Voir détails: ${dept}`)}
-                    className="view-button"
-                  >
-                    Voir
-                  </button>
-                  <button
-                    onClick={() =>
-                      setDepartments((prev) => {
-                        const updated = { ...prev };
-                        delete updated[dept];
-                        return updated;
-                      })
-                    }
+                    onClick={() => handleDeleteDepartment(dept.id)}
                     className="delete-button"
                   >
                     Supprimer
