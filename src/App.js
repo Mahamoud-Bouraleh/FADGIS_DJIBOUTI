@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import correct
 import "./App.css";
 import logo from "./logo.png";
 import { useTranslation } from "react-i18next";
@@ -7,13 +8,17 @@ import CarteInteractivePage from "./components/CarteInteractivePage";
 import LocaliVehicule from "./components/LocaliVehicule";
 import PersonnTemp from "./components/PersonnTemp";
 import ZoneControl from "./components/ZoneControl";
-import GestionEmploy from "./components/GestionEmploy";
+import GestionEmploy from "./components/employe/GestionEmploy";
 import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
 import { EmployeeProvider } from "./components/EmployeeContext";
-import GeneratePayroll from "./components/submenu/GeneratePayroll";
+import GeneratePayroll from "./components/Payroll/submenu/GeneratePayroll";
 import FormationPage from "./components/FormationPage";
 import Planification from "./components/Planification";
-
+import ModifierEmploye from "./components/employe/ModifierEmploye";
+import EmployeDetail from "./components/employe/EmployeDetail";
+import OperationsMilitaires from "./components/Operation/OperationsMilitaires";
+import AffectationEquipes from "./components/AffectationEquipes/AffectationEquipes";
+import TaxReduction from "./components/Payroll/submenu/TaxReduction";
 
 
 import {
@@ -52,17 +57,16 @@ function App() {
         { name: t("training"), component: "FormationPage" }, // Relier ici
         { name: t("scheduling"), component: "Planification" },
         { name: t("employeeManagement"), component: "GestionEmploy" },
-        { name: t("militaryOps"), component: null },
-        { name: t("teamAssignment"), component: null },
+        { name: t("militaryOps"), component: "OperationsMilitaires"},
+        { name: t("teamAssignment"), component: "AffectationEquipes" },
       ],
     },
-    
     {
       title: t("payrol"),
       icon: <FaMoneyBillWave />,
       subItems: [
         { name: t("general payroll"), component: "GeneratePayroll" },
-        { name: t("tax reduction"), component: null },
+        { name: t("tax reduction"), component: "TaxReduction" },
       ],
     },
     {
@@ -140,88 +144,107 @@ function App() {
         return <PersonnTemp />;
       case "GeneratePayroll":
         return <GeneratePayroll />;
+        case "TaxReduction":
+          return <TaxReduction />;
+
+
       case "ZoneControl":
         return <ZoneControl />;
       case "GestionEmploy":
         return <GestionEmploy />;
+        case "OperationsMilitaires":
+          return <OperationsMilitaires />;
+
+          case "AffectationEquipes":
+            return <AffectationEquipes />;
+
       case "FormationPage": // Nouveau cas
         return <FormationPage />;
-
-        case "Planification": // Nouveau cas
+      case "Planification": // Nouveau cas
         return <Planification />;
       default:
-        return <Planification/>;
+        return <Dashboard />;
     }
   };
-  
 
   return (
     <EmployeeProvider>
-      <div className="app-container">
-        <header className="header">
-          <div className="Garde">
-            <img src={logo} alt="Logo" className="logo" />
-            <h1>FADSGI DJIBOUTI</h1>
-          </div>
-          <div className="user-info">
-            <span>Ali Mohamed Yacoub</span>
-            <div className="language-select">
-              <select
-                onChange={handleLanguageChange}
-                value={i18n.language}
-                className="language-selector"
-              >
-                <option value="fr">{t("french")}</option>
-                <option value="en">{t("english")}</option>
-              </select>
+      <Router>
+        <div className="app-container">
+          <header className="header">
+            <div className="Garde">
+              <img src={logo} alt="Logo" className="logo" />
+              <h1>FADSGI DJIBOUTI</h1>
             </div>
-            <div className="search-container">
-              <div className="icons">
-                <span className="icon">🔔</span>
-                <span className="icon">⚙️</span>
-              </div>
-            </div>
-            <button className="logout-button">
-              <span className="icon">👤</span>
-            </button>
-          </div>
-        </header>
-
-        <div className="content-container">
-          <aside className="sidebar">
-            {menuItems.map((menuItem, index) => (
-              <div key={index}>
-                <div
-                  className="menu-item"
-                  onClick={() => handleSubmenuToggle(index)}
+            <div className="user-info">
+              <span>Ali Mohamed Yacoub</span>
+              <div className="language-select">
+                <select
+                  onChange={handleLanguageChange}
+                  value={i18n.language}
+                  className="language-selector"
                 >
-                  <span className="menu-icon">{menuItem.icon}</span>
-                  {menuItem.title}
-                </div>
-                {openSubmenu === index && menuItem.subItems.length > 0 && (
-                  <div className="submenu">
-                    {menuItem.subItems.map((subItem, subIndex) => (
-                      <div
-                        key={subIndex}
-                        className={`submenu-item ${
-                          activeItem === subItem.name ? "active" : ""
-                        }`}
-                        onClick={() => handleItemClick(subItem.component)}
-                      >
-                        {subItem.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                  <option value="fr">{t("french")}</option>
+                  <option value="en">{t("english")}</option>
+                </select>
               </div>
-            ))}
-          </aside>
+              <div className="search-container">
+                <div className="icons">
+                  <span className="icon">🔔</span>
+                  <span className="icon">⚙️</span>
+                </div>
+              </div>
+              <button className="logout-button">
+                <span className="icon">👤</span>
+              </button>
+            </div>
+          </header>
 
-          <main className="main-content">{renderComponent()}</main>
+          <div className="content-container">
+            <aside className="sidebar">
+              {menuItems.map((menuItem, index) => (
+                <div key={index}>
+                  <div
+                    className="menu-item"
+                    onClick={() => handleSubmenuToggle(index)}
+                  >
+                    <span className="menu-icon">{menuItem.icon}</span>
+                    {menuItem.title}
+                  </div>
+                  {openSubmenu === index && menuItem.subItems.length > 0 && (
+                    <div className="submenu">
+                      {menuItem.subItems.map((subItem, subIndex) => (
+                        <div
+                          key={subIndex}
+                          className={`submenu-item ${
+                            activeItem === subItem.name ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick(subItem.component)}
+                        >
+                          {subItem.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </aside>
+
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={renderComponent()} />
+                <Route path="/gestion-employes" element={<GestionEmploy />} />
+                <Route path="/modifier-employe" element={<ModifierEmploye />} />
+                <Route path="/employe-detail" element={<EmployeDetail />} />
+                <Route path="/operations-militaires" element={<OperationsMilitaires />} />
+                <Route path="/affectation-equipes" element={<AffectationEquipes />} />
+
+              </Routes>
+            </main>
+          </div>
         </div>
-      </div>
+      </Router>
     </EmployeeProvider>
-    
   );
 }
 

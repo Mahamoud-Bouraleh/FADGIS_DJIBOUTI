@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './Planification.css';
 import PlanningAutomatique from './submenu/PlanningAutomatique';
-
+import Personnel from './submenu/Personnel';
 const Planification = () => {
     const [activeTab, setActiveTab] = useState('arme');
 
@@ -35,9 +35,9 @@ const Planification = () => {
                     </li>
                     <li
                         className={activeTab === 'personnel' ? 'active' : ''}
-                        onClick={() => handleTabClick('personnel')}
+                        onClick={() => handleTabClick('Affiche emploie')}
                     >
-                        Personnel
+                        Affiche emploie
                     </li>
                     <li
                         className={activeTab === 'planningAutomatique' ? 'active' : ''}
@@ -52,7 +52,8 @@ const Planification = () => {
                 {activeTab === 'planningAutomatique' && <PlanningAutomatique />}
                 {activeTab === 'vehicules' && <div>Contenu de la gestion des véhicules.</div>}
                 {activeTab === 'formation' && <div>Contenu de la gestion des formations.</div>}
-                {activeTab === 'personnel' && <div>Contenu de la gestion du personnel.</div>}
+                {activeTab === 'affiche emploie '&& <Personnel/>}
+                
                 {activeTab === ' nouveau ' && <div>Contenu du planning automatique.</div>}
             </div>
         </div>

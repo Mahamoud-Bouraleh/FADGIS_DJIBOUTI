@@ -1,25 +1,33 @@
 import React, { useContext, useState } from "react";
 import { FaTrash, FaEye, FaEdit } from "react-icons/fa";
-import "./GestionEmploy.css";
-import InfoDepartement from "./submenu/InfoDepartement";
-import AjoutArme from "./submenu/AjoutArme";
-import ImportListe from "./submenu/ImportListe";
-import DataTable from "react-data-table-component";
 import { Button, Input, InputGroup } from "reactstrap";
-import { EmployeeContext } from "./EmployeeContext";
+import * as XLSX from "xlsx"; // Pour l'export Excel
+import jsPDF from "jspdf"; // Pour l'impression Word
+import { useNavigate } from "react-router-dom"; // Pour la navigation
+import InfoDepartement from "./InfoDepartement";
+import AjoutArme from "./AjoutArme";
+import ImportListe from "./ImportListe";
+import DataTable from "react-data-table-component";
+import { EmployeeContext } from "../EmployeeContext"; 
+import "./GestionEmploy.css";
 
 const GestionEmploy = () => {
   const { employees, setEmployees } = useContext(EmployeeContext);
+  const navigate = useNavigate(); // Initialisation de la navigation
   const [activeTab, setActiveTab] = useState("Gestion des employés");
   const [searchTerm, setSearchTerm] = useState(""); // Pour la recherche
 
   // Filtrer les employés en fonction de la recherche
-  const filteredEmployees = employees.filter((employee) => 
+  const filteredEmployees = employees.filter((employee) =>
     employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
     employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     employee.telephone.toLowerCase().includes(searchTerm.toLowerCase()) ||
     employee.departement.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleView = (employee) => {
+    navigate("/employe-detail", { state: { employee } });
+  };
 
   const handleDelete = (nom) => {
     if (window.confirm(`Êtes-vous sûr de vouloir supprimer ${nom} ?`)) {
@@ -30,13 +38,40 @@ const GestionEmploy = () => {
   };
 
   const handleEdit = (employee) => {
-    alert(`Modifier : ${employee.nom}`);
+    navigate("/modifier-employe", { state: { employee } }); // Navigue vers la page de modification
+  };
+
+  // Télécharger les données en format Excel
+  const handleDownloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredEmployees);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Employés");
+    XLSX.writeFile(workbook, "Employes.xlsx");
+  };
+
+  // Télécharger les données en format Word
+  const handlePrintWord = () => {
+    const doc = new jsPDF();
+    let content = `Liste des Employés\n\n`;
+
+    filteredEmployees.forEach((employee, index) => {
+      content += `${index + 1}. Nom: ${employee.nom}, Email: ${employee.email}, Téléphone: ${employee.telephone}, Département: ${employee.departement}\n`;
+    });
+
+    doc.text(content, 10, 10);
+    doc.save("Employes.pdf");
   };
 
   const columns = [
     {
       name: "Photo",
-      selector: (row) => <img src={row.photo || "https://via.placeholder.com/50"} alt="Photo" width={50} />,
+      selector: (row) => (
+        <img
+          src={row.photo || "https://via.placeholder.com/50"}
+          alt="Photo"
+          width={50}
+        />
+      ),
     },
     { name: "Nom", selector: (row) => row.nom, sortable: true },
     { name: "Email", selector: (row) => row.email, sortable: true },
@@ -50,25 +85,23 @@ const GestionEmploy = () => {
           <Button
             size="sm"
             color="info"
-            onClick={() => alert(`Voir : ${row.nom}`)}
+            onClick={() => handleView(row)} // Voir
             className="action-btn"
           >
             <FaEye /> Voir
           </Button>
-
           <Button
             size="sm"
             color="warning"
-            onClick={() => handleEdit(row)}
+            onClick={() => handleEdit(row)} // Modifier
             className="action-btn"
           >
             <FaEdit /> Modifier
           </Button>
-
           <Button
             size="sm"
             color="danger"
-            onClick={() => handleDelete(row.nom)}
+            onClick={() => handleDelete(row.nom)} // Supprimer
             className="action-btn"
           >
             <FaTrash /> Supprimer
@@ -108,18 +141,6 @@ const GestionEmploy = () => {
           >
             Import Liste
           </li>
-          <li
-            className={activeTab === "Inactif Arme" ? "active" : ""}
-            onClick={() => handleTabClick("Inactif Arme")}
-          >
-            Inactif Arme
-          </li>
-          <li
-            className={activeTab === "Info Département" ? "active" : ""}
-            onClick={() => handleTabClick("Info Département")}
-          >
-            Info Département
-          </li>
         </ul>
       </nav>
 
@@ -132,18 +153,25 @@ const GestionEmploy = () => {
                   <Input
                     placeholder="Rechercher ici"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)} // Mise à jour du terme de recherche
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </InputGroup>
-                <Button className="btn-success me-2">Excel</Button>
-                <Button color="primary">Imprimer</Button>
+                <Button
+                  className="btn-success me-2"
+                  onClick={handleDownloadExcel}
+                >
+                  Excel
+                </Button>
+                <Button color="primary" onClick={handlePrintWord}>
+                  Imprimer
+                </Button>
               </div>
             </div>
 
             <DataTable
               className="table"
               columns={columns}
-              data={filteredEmployees} // Utiliser les employés filtrés
+              data={filteredEmployees}
               pagination
               highlightOnHover
               striped
@@ -153,7 +181,6 @@ const GestionEmploy = () => {
         )}
         {activeTab === "Ajouter Arme" && <AjoutArme />}
         {activeTab === "Import Liste" && <ImportListe />}
-        {activeTab === "Inactif Arme" && <div>Content for Inactif Arme</div>}
         {activeTab === "Info Département" && (
           <InfoDepartement employeeData={employees} />
         )}

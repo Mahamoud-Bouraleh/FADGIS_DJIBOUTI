@@ -7,7 +7,7 @@
   overflow: hidden; /* Prevents extra scrolling space */
 }
 
-.header {
+.app-container .header {
   display: flex;
   justify-content: space-between;
   align-items: center;

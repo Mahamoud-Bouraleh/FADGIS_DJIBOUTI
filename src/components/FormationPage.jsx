@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import GestionFormations from "./submenu/GestionFormations";
-import InscriptionsFormations from "./submenu/InscriptionsFormations";
+import GestionFormations from "./formations/GestionFormations";
+import InscriptionsFormations from "./formations/InscriptionsFormations";
 import "./FormationPage.css";
-import GenerationCertificat from "./submenu/GenerationCertificat";
+import GenerationCertificat from "./formations/GenerationCertificat";
 
 const FormationPage = () => { // Renommé pour correspondre à l'export
   const [currentPage, setCurrentPage] = useState("default");

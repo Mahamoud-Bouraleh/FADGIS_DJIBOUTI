@@ -1,0 +1,49 @@
+.affectation-equipes-page {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .page-header h1 {
+    color: #2b7a5e;
+    font-size: 24px;
+  }
+  
+  .submenu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .submenu-horizontal li {
+    margin: 0 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submenu-horizontal li.active,
+  .submenu-horizontal li:hover {
+    background-color: #2b7a5e;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .content {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
