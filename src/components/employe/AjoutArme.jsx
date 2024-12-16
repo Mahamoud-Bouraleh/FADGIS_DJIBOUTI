@@ -89,7 +89,7 @@ const AjoutArme = () => {
       }
   })
   .catch((err) => {
-      console.error("Erreur réseau ou serveur : ", err);
+      console.error("Erreur de réseau ou serveur : ", err);
       alert("Erreur lors de l'envoi des données au serveur.");
   });
   
