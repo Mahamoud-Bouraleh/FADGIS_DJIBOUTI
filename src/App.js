@@ -19,7 +19,7 @@ import EmployeDetail from "./components/employe/EmployeDetail";
 import OperationsMilitaires from "./components/Operation/OperationsMilitaires";
 import AffectationEquipes from "./components/AffectationEquipes/AffectationEquipes";
 import TaxReduction from "./components/Payroll/submenu/TaxReduction";
-
+import GestionPromotionGrade from "./components/gestionPromationsGrade/GestionPromotionGrade";
 
 import {
   FaUser,
@@ -58,6 +58,7 @@ function App() {
         { name: t("scheduling"), component: "Planification" },
         { name: t("employeeManagement"), component: "GestionEmploy" },
         { name: t("militaryOps"), component: "OperationsMilitaires"},
+        { name: t("Gestion Promotions Grades"), component: "GestionPromotionGrade"},
         { name: t("teamAssignment"), component: "AffectationEquipes" },
       ],
     },
@@ -147,7 +148,8 @@ function App() {
         case "TaxReduction":
           return <TaxReduction />;
 
-
+          case "GestionPromotionGrade":
+            return <GestionPromotionGrade />;
       case "ZoneControl":
         return <ZoneControl />;
       case "GestionEmploy":

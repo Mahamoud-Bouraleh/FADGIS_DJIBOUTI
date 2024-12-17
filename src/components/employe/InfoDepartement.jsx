@@ -3,47 +3,41 @@ import axios from "axios";
 import "./InfoDepartement.css";
 
 const InfoDepartement = () => {
-  const [departments, setDepartments] = useState([]); // État pour stocker les départements
-  const [newDepartment, setNewDepartment] = useState(""); // Nouvel input pour ajouter un département
-  const [successMessage, setSuccessMessage] = useState(""); // État pour afficher le message de succès
+  const [departments, setDepartments] = useState([]); // Stocker les départements
+  const [newDepartment, setNewDepartment] = useState(""); // Input pour ajouter un département
+  const [successMessage, setSuccessMessage] = useState(""); // Message de succès
 
   // Charger les départements depuis l'API
   useEffect(() => {
     axios
-      .get("http://localhost:5000/departements") // Assurez-vous que l'API renvoie des objets {id, nom}
+      .get("http://localhost:5000/departements")
       .then((response) => setDepartments(response.data))
-      .catch((error) => console.error("Erreur lors du chargement :", error));
+      .catch((error) => console.error("Erreur de chargement :", error));
   }, []);
 
   // Ajouter un département
   const handleCreateDepartment = () => {
-    if (newDepartment) {
+    if (newDepartment.trim()) {
       axios
-        .post("http://localhost:5000/departements", { nom: newDepartment }) // Envoie seulement { nom }
+        .post("http://localhost:5000/departements", { nom: newDepartment })
         .then((response) => {
-          setDepartments([...departments, response.data]); // Ajouter la réponse du serveur (id, nom)
-          setNewDepartment(""); // Réinitialise le champ
-          setSuccessMessage("Département ajouté avec succès!"); // Afficher le message de succès
-          
-          // Masquer le message après 3 secondes
-          setTimeout(() => setSuccessMessage(""), 3000);
+          setDepartments([...departments, response.data]); // Ajouter à la liste
+          setNewDepartment(""); // Réinitialiser l'input
+          setSuccessMessage("Département ajouté avec succès!");
+          setTimeout(() => setSuccessMessage(""), 3000); // Masquer après 3 sec
         })
-        .catch((error) => {
-          console.error("Erreur lors de l'ajout :", error);
-          setSuccessMessage("Erreur lors de l'ajout du département.");
-          setTimeout(() => setSuccessMessage(""), 3000);
-        });
+        .catch((error) => console.error("Erreur d'ajout :", error));
     }
   };
 
   // Supprimer un département
   const handleDeleteDepartment = (id) => {
     axios
-      .delete(`http://localhost:5000/departements/${id}`) // Envoie l'ID à supprimer
+      .delete(`http://localhost:5000/departements/${id}`)
       .then(() => {
-        setDepartments(departments.filter((dept) => dept.id !== id)); // Met à jour la liste
+        setDepartments(departments.filter((dept) => dept.id !== id));
       })
-      .catch((error) => console.error("Erreur lors de la suppression :", error));
+      .catch((error) => console.error("Erreur de suppression :", error));
   };
 
   return (
@@ -52,7 +46,7 @@ const InfoDepartement = () => {
         <h2>Gestion des Départements</h2>
       </header>
 
-      {/* Formulaire pour ajouter un département */}
+      {/* Formulaire d'ajout */}
       <div className="create-department-form">
         <h3>Créer un Nouveau Département</h3>
         <div className="form-group">
@@ -64,22 +58,22 @@ const InfoDepartement = () => {
             className="department-input"
           />
           <button onClick={handleCreateDepartment} className="create-button">
-            Ajouter Département
+            Ajouter
           </button>
         </div>
       </div>
 
-      {/* Affichage du message de succès */}
+      {/* Message de succès */}
       {successMessage && <div className="success-message">{successMessage}</div>}
 
       {/* Liste des départements */}
-      <div className="department-list">
-        <h3>Liste des Départements</h3>
+      <div className="department-list department-section">
+        <h3 className="department-title">Liste des Départements</h3>
         <table className="department-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nom du Département</th>
+              <th>Nom</th>
               <th>Actions</th>
             </tr>
           </thead>

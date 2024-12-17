@@ -1,0 +1,56 @@
+/* GestionPromotionGrade.css */
+
+.gestion-promotion-grade {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .submenu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+ 
+  
+  .submenu-item:hover {
+    background-color: #0056b3;
+  }
+  
+  .submenu-item.active {
+    background-color: #0056b3;
+    box-shadow: inset 0 -2px 0 0 #003f7f;
+  }
+  
+  .tab-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tab-pane {
+    display: block;
+  }
+  
+  .tab-pane h2 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .tab-pane p {
+    color: #555;
+    line-height: 1.6;
+  }
+  

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { FaTrash, FaEye, FaEdit } from "react-icons/fa";
 import { Button, Input, InputGroup } from "reactstrap";
 import * as XLSX from "xlsx"; // Pour l'export Excel
-import jsPDF from "jspdf"; // Pour l'impression Word
+import jsPDF from "jspdf"; // Pour l'impression PDF
 import { useNavigate } from "react-router-dom"; // Pour la navigation
 import InfoDepartement from "./InfoDepartement";
 import AjoutArme from "./AjoutArme";
@@ -49,7 +49,7 @@ const GestionEmploy = () => {
     XLSX.writeFile(workbook, "Employes.xlsx");
   };
 
-  // Télécharger les données en format Word
+  // Télécharger les données en format PDF
   const handlePrintWord = () => {
     const doc = new jsPDF();
     let content = `Liste des Employés\n\n`;
@@ -121,6 +121,7 @@ const GestionEmploy = () => {
         <h1>Gestion des employés</h1>
       </header>
 
+      {/* Navigation des sous-menus */}
       <nav className="submenu">
         <ul>
           <li
@@ -141,9 +142,16 @@ const GestionEmploy = () => {
           >
             Import Liste
           </li>
+          <li
+            className={activeTab === "InfoDepartement" ? "active" : ""}
+            onClick={() => handleTabClick("InfoDepartement")}
+          >
+            InfoDepartement
+          </li>
         </ul>
       </nav>
 
+      {/* Contenu dynamique */}
       <div className="content">
         {activeTab === "Gestion des employés" && (
           <div>
@@ -181,9 +189,7 @@ const GestionEmploy = () => {
         )}
         {activeTab === "Ajouter Arme" && <AjoutArme />}
         {activeTab === "Import Liste" && <ImportListe />}
-        {activeTab === "Info Département" && (
-          <InfoDepartement employeeData={employees} />
-        )}
+        {activeTab === "InfoDepartement" && <InfoDepartement />}
       </div>
     </div>
   );

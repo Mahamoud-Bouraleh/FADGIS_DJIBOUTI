@@ -1,10 +1,18 @@
-// Planification.jsx
 import React, { useState } from 'react';
 import './Planification.css';
-import PlanningAutomatique from './submenu/PlanningAutomatique';
-import Personnel from './submenu/Personnel';
+import SuiviAbsences from './Planification/SuiviAbsences';
+import CongesPermissions from './Planification/CongesPermissions';
+import GestionHoraires from './Planification/GestionHoraires';
+import Personnel from './Planification/Personnel';
+import PlanningAutomatique from './Planification/PlanningAutomatique';
+
+
+
+
+
+
 const Planification = () => {
-    const [activeTab, setActiveTab] = useState('arme');
+    const [activeTab, setActiveTab] = useState('suiviAbsences');
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
@@ -16,28 +24,28 @@ const Planification = () => {
             <nav className="submenu">
                 <ul>
                     <li
-                        className={activeTab === 'arme' ? 'active' : ''}
-                        onClick={() => handleTabClick('arme')}
+                        className={activeTab === 'suiviAbsences' ? 'active' : ''}
+                        onClick={() => handleTabClick('suiviAbsences')}
                     >
-                        Arme
+                        Suivi des Absences
                     </li>
                     <li
-                        className={activeTab === 'vehicules' ? 'active' : ''}
-                        onClick={() => handleTabClick('vehicules')}
+                        className={activeTab === 'congesPermissions' ? 'active' : ''}
+                        onClick={() => handleTabClick('congesPermissions')}
                     >
-                        Véhicules
+                        Congés et Permissions
                     </li>
                     <li
-                        className={activeTab === 'formation' ? 'active' : ''}
-                        onClick={() => handleTabClick('formation')}
+                        className={activeTab === 'gestionHoraires' ? 'active' : ''}
+                        onClick={() => handleTabClick('gestionHoraires')}
                     >
-                        Formation
+                        Gestion des Horaires de Travail
                     </li>
                     <li
                         className={activeTab === 'personnel' ? 'active' : ''}
-                        onClick={() => handleTabClick('Affiche emploie')}
+                        onClick={() => handleTabClick('personnel')}
                     >
-                        Affiche emploie
+                        Affiche Emploi
                     </li>
                     <li
                         className={activeTab === 'planningAutomatique' ? 'active' : ''}
@@ -49,12 +57,11 @@ const Planification = () => {
             </nav>
 
             <div className="tab-content">
+                {activeTab === 'suiviAbsences' && <SuiviAbsences />}
+                {activeTab === 'congesPermissions' && <CongesPermissions />}
+                {activeTab === 'gestionHoraires' && <GestionHoraires />}
+                {activeTab === 'personnel' && <Personnel />}
                 {activeTab === 'planningAutomatique' && <PlanningAutomatique />}
-                {activeTab === 'vehicules' && <div>Contenu de la gestion des véhicules.</div>}
-                {activeTab === 'formation' && <div>Contenu de la gestion des formations.</div>}
-                {activeTab === 'affiche emploie '&& <Personnel/>}
-                
-                {activeTab === ' nouveau ' && <div>Contenu du planning automatique.</div>}
             </div>
         </div>
     );

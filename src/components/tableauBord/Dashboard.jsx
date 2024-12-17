@@ -11,7 +11,7 @@ const Dashboard = () => {
             <FaUsers size={40} className="icon" />
           </div>
           <h3>Nombre des employés</h3>
-          <p>281</p>
+          <p>28144</p>
           <div className="separator"></div> {/* Ligne séparatrice */}
           <span className="growth">+55% par rapport à la semaine dernière</span>
         </div>
