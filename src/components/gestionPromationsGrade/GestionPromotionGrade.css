@@ -1,56 +1,82 @@
-/* GestionPromotionGrade.css */
+.gestion-promotion-grades {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
 
-.gestion-promotion-grade {
-    font-family: Arial, sans-serif;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 1200px;
-    background-color: #f4f4f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.gestion-promotion-grades h1 {
+  background-color:  #ffffff;
+  color: #201e1e;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px 12px 0 0; /* Arrondit uniquement le haut du conteneur */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin: 0; /* Supprime l'espacement par défaut */
+}
+
+/* Submenu Container */
+.submenus {
+  display: flex;
+  justify-content: center;
+  background-color:  #e0e0e0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Submenu Items */
+.submenus button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.submenus button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Active Tab */
+.submenus button.active {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+/* Tab Content */
+.tab-contents {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-contents > div {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation for content */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .submenu {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
- 
-  
-  .submenu-item:hover {
-    background-color: #0056b3;
-  }
-  
-  .submenu-item.active {
-    background-color: #0056b3;
-    box-shadow: inset 0 -2px 0 0 #003f7f;
-  }
-  
-  .tab-content {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tab-pane {
-    display: block;
-  }
-  
-  .tab-pane h2 {
-    margin-top: 0;
-    color: #007bff;
-  }
-  
-  .tab-pane p {
-    color: #555;
-    line-height: 1.6;
-  }
-  
+}

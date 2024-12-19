@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import correct
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.png";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ import LocaliVehicule from "./components/LocaliVehicule";
 import PersonnTemp from "./components/PersonnTemp";
 import ZoneControl from "./components/ZoneControl";
 import GestionEmploy from "./components/employe/GestionEmploy";
-import Dashboard from "./components/tableauBord/Dashboard"; // Corrected import
+import Dashboard from "./components/tableauBord/Dashboard";
 import { EmployeeProvider } from "./components/EmployeeContext";
 import GeneratePayroll from "./components/Payroll/submenu/GeneratePayroll";
 import FormationPage from "./components/FormationPage";
@@ -20,6 +20,7 @@ import OperationsMilitaires from "./components/Operation/OperationsMilitaires";
 import AffectationEquipes from "./components/AffectationEquipes/AffectationEquipes";
 import TaxReduction from "./components/Payroll/submenu/TaxReduction";
 import GestionPromotionGrade from "./components/gestionPromationsGrade/GestionPromotionGrade";
+import Login from "./components/Login/Login";
 
 import {
   FaUser,
@@ -36,9 +37,15 @@ import {
 function App() {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [activeItem, setActiveItem] = useState("Dashboard"); // Default to "Dashboard"
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // État d'authentification
+  const [errorMessage, setErrorMessage] = useState(""); // Pour afficher le message d'erreur
   const { t, i18n } = useTranslation();
 
-  // Language change handler
+  useEffect(() => {
+    const authStatus = localStorage.getItem("authenticated");
+    setIsAuthenticated(authStatus === "true");
+  }, []);
+
   const handleLanguageChange = (event) => {
     const language = event.target.value;
     i18n.changeLanguage(language);
@@ -48,17 +55,17 @@ function App() {
     {
       title: t("dashboard"),
       icon: <FaHome />,
-      subItems: [{ name: t("dashboard"), component: "Dashboard" }],
+      component: "Dashboard", // Relie directement à la page Dashboard.jsx
     },
     {
       title: t("humanResources"),
       icon: <FaUser />,
       subItems: [
-        { name: t("training"), component: "FormationPage" }, // Relier ici
+        { name: t("training"), component: "FormationPage" },
         { name: t("scheduling"), component: "Planification" },
         { name: t("employeeManagement"), component: "GestionEmploy" },
-        { name: t("militaryOps"), component: "OperationsMilitaires"},
-        { name: t("Gestion Promotions Grades"), component: "GestionPromotionGrade"},
+        { name: t("militaryOps"), component: "OperationsMilitaires" },
+        { name: t("Gestion Promotions Grades"), component: "GestionPromotionGrade" },
         { name: t("teamAssignment"), component: "AffectationEquipes" },
       ],
     },
@@ -145,106 +152,122 @@ function App() {
         return <PersonnTemp />;
       case "GeneratePayroll":
         return <GeneratePayroll />;
-        case "TaxReduction":
-          return <TaxReduction />;
-
-          case "GestionPromotionGrade":
-            return <GestionPromotionGrade />;
+      case "TaxReduction":
+        return <TaxReduction />;
+      case "GestionPromotionGrade":
+        return <GestionPromotionGrade />;
       case "ZoneControl":
         return <ZoneControl />;
       case "GestionEmploy":
         return <GestionEmploy />;
-        case "OperationsMilitaires":
-          return <OperationsMilitaires />;
-
-          case "AffectationEquipes":
-            return <AffectationEquipes />;
-
-      case "FormationPage": // Nouveau cas
+      case "OperationsMilitaires":
+        return <OperationsMilitaires />;
+      case "AffectationEquipes":
+        return <AffectationEquipes />;
+      case "FormationPage":
         return <FormationPage />;
-      case "Planification": // Nouveau cas
+      case "Planification":
         return <Planification />;
       default:
         return <Dashboard />;
     }
   };
 
+  const handleLogin = (username, password) => {
+    if (username === "mbf" && password === "1234") {
+      setIsAuthenticated(true);
+      localStorage.setItem("authenticated", "true");
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Nom d'utilisateur ou mot de passe incorrect.");
+    }
+  };
+
   return (
     <EmployeeProvider>
       <Router>
-        <div className="app-container">
-          <header className="header">
-            <div className="Garde">
-              <img src={logo} alt="Logo" className="logo" />
-              <h1>FADSGI DJIBOUTI</h1>
-            </div>
-            <div className="user-info">
-              <span>Ali Mohamed Yacoub</span>
-              <div className="language-select">
-                <select
-                  onChange={handleLanguageChange}
-                  value={i18n.language}
-                  className="language-selector"
-                >
-                  <option value="fr">{t("french")}</option>
-                  <option value="en">{t("english")}</option>
-                </select>
+        {isAuthenticated ? (
+          <div className="app-container">
+            <header className="header">
+              <div className="Garde">
+                <img src={logo} alt="Logo" className="logo" />
+                <h1>FADSGI DJIBOUTI</h1>
               </div>
-              <div className="search-container">
-                <div className="icons">
-                  <span className="icon">🔔</span>
-                  <span className="icon">⚙️</span>
-                </div>
-              </div>
-              <button className="logout-button">
-                <span className="icon">👤</span>
-              </button>
-            </div>
-          </header>
-
-          <div className="content-container">
-            <aside className="sidebar">
-              {menuItems.map((menuItem, index) => (
-                <div key={index}>
-                  <div
-                    className="menu-item"
-                    onClick={() => handleSubmenuToggle(index)}
+              <div className="user-info">
+                <span>Ali Mohamed Yacoub</span>
+                <div className="language-select">
+                  <select
+                    onChange={handleLanguageChange}
+                    value={i18n.language}
+                    className="language-selector"
                   >
-                    <span className="menu-icon">{menuItem.icon}</span>
-                    {menuItem.title}
-                  </div>
-                  {openSubmenu === index && menuItem.subItems.length > 0 && (
-                    <div className="submenu">
-                      {menuItem.subItems.map((subItem, subIndex) => (
-                        <div
-                          key={subIndex}
-                          className={`submenu-item ${
-                            activeItem === subItem.name ? "active" : ""
-                          }`}
-                          onClick={() => handleItemClick(subItem.component)}
-                        >
-                          {subItem.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                    <option value="fr">{t("french")}</option>
+                    <option value="en">{t("english")}</option>
+                  </select>
                 </div>
-              ))}
-            </aside>
+                <button
+                  className="logout-button"
+                  onClick={() => {
+                    localStorage.removeItem("authenticated");
+                    setIsAuthenticated(false);
+                  }}
+                >
+                  <span className="icon">👤</span>
+                </button>
+              </div>
+            </header>
 
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={renderComponent()} />
-                <Route path="/gestion-employes" element={<GestionEmploy />} />
-                <Route path="/modifier-employe" element={<ModifierEmploye />} />
-                <Route path="/employe-detail" element={<EmployeDetail />} />
-                <Route path="/operations-militaires" element={<OperationsMilitaires />} />
-                <Route path="/affectation-equipes" element={<AffectationEquipes />} />
+            <div className="content-container">
+              <aside className="sidebar">
+                {menuItems.map((menuItem, index) => (
+                  <div key={index}>
+                    <div
+                      className={`menu-item ${
+                        activeItem === menuItem.component ? "active" : ""
+                      }`}
+                      onClick={() =>
+                        menuItem.component
+                          ? setActiveItem(menuItem.component)
+                          : handleSubmenuToggle(index)
+                      }
+                    >
+                      <span className="menu-icon">{menuItem.icon}</span>
+                      {menuItem.title}
+                    </div>
+                    {openSubmenu === index && menuItem.subItems?.length > 0 && (
+                      <div className="submenu">
+                        {menuItem.subItems.map((subItem, subIndex) => (
+                          <div
+                            key={subIndex}
+                            className={`submenu-item ${
+                              activeItem === subItem.component ? "active" : ""
+                            }`}
+                            onClick={() => handleItemClick(subItem.component)}
+                          >
+                            {subItem.name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </aside>
 
-              </Routes>
-            </main>
+              <main className="main-content">
+                <Routes>
+                  <Route path="/" element={renderComponent()} />
+                  <Route path="/gestion-employes" element={<GestionEmploy />} />
+                  <Route path="/modifier-employe" element={<ModifierEmploye />} />
+                  <Route path="/employe-detail" element={<EmployeDetail />} />
+                  <Route path="/operations-militaires" element={<OperationsMilitaires />} />
+                  <Route path="/affectation-equipes" element={<AffectationEquipes />} />
+                </Routes>
+              </main>
+            </div>
           </div>
-        </div>
+        ) : (
+          <Login onLogin={handleLogin} errorMessage={errorMessage} />
+        )}
       </Router>
     </EmployeeProvider>
   );

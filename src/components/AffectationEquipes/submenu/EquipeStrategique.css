@@ -1,0 +1,36 @@
+.equipe-strategique-container {
+    background-color: #f0f8ff;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .equipe-strategique-container h2 {
+    font-size: 22px;
+    color: #0056b3;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .equipe-strategique-container p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .equipe-strategique-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .equipe-strategique-container button:hover {
+    background-color: #0056b3;
+  }
+  

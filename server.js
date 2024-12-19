@@ -1,25 +1,26 @@
 const express = require("express");
 const mysql = require("mysql");
-const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+const port = 5000;
 
-// Connexion à la base de données MySQL
+app.use(bodyParser.json());
+
+// Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "fadsig_djibouti",  // Nom de votre base de données
+  database: "forum_discussion",
 });
 
 db.connect((err) => {
   if (err) {
-    console.error("Erreur de connexion :", err);
-  } else {
-    console.log("Connecté à la base de données.");
+    console.error("Erreur de connexion à la base de données:", err);
+    return;
   }
+  console.log("Connexion à la base de données réussie");
 });
 
 // Ajouter un employé
@@ -41,6 +42,29 @@ app.post("/ajouter-employe", (req, res) => {
     tuteurTelephone2,
     sante,
   } = req.body;
+
+  // Vérification des champs obligatoires
+  if (
+    !nom ||
+    !sexe ||
+    !dateNaissance ||
+    !lieuNaissance ||
+    !departement ||
+    !telephone ||
+    !email ||
+    !status ||
+    !dernierDiplome ||
+    !anneeTerminee ||
+    !tuteurNom1 ||
+    !tuteurTelephone1 ||
+    !tuteurNom2 ||
+    !tuteurTelephone2 ||
+    !sante
+  ) {
+    return res.status(400).json({
+      message: "Tous les champs sont obligatoires.",
+    });
+  }
 
   const query = `
     INSERT INTO employes 
@@ -76,5 +100,6 @@ app.post("/ajouter-employe", (req, res) => {
   );
 });
 
-// Lancer le serveur
-app.listen(5000, () => console.log("Serveur sur le port 5000"));
+app.listen(port, () => {
+  console.log(`Serveur démarré sur http://localhost:${port}`);
+});

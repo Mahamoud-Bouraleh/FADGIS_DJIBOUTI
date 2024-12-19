@@ -1,10 +1,11 @@
 // GestionPromotionGrade.jsx
 import React, { useState } from 'react';
-import './GestionPromotionGrade.css';
 import GestionPromotions from './submenu/GestionPromotions';
 import GestionGrades from './submenu/GestionGrades';
 import HistoriquePromotions from './submenu/HistoriquePromotions';
 import HistoriqueGrades from './submenu/HistoriqueGrades';
+import './GestionPromotionGrade.css';
+
 
 const GestionPromotionGrade = () => {
   const [activeTab, setActiveTab] = useState('gestionPromotions');
@@ -14,31 +15,31 @@ const GestionPromotionGrade = () => {
   };
 
   return (
-    <div className="gestion-promotion-grade">
+    <div className="gestion-promotion-grades">
       <h1>Gestion des Promotions et Grades</h1>
 
       {/* Submenu */}
-      <div className="submenu">
+      <div className="submenus">
         <button
-          className={`submenu-item ${activeTab === 'gestionPromotions' ? 'active' : ''}`}
+          className={`submenus-items ${activeTab === 'gestionPromotions' ? 'active' : ''}`}
           onClick={() => handleTabClick('gestionPromotions')}
         >
           Gestion des Promotions
         </button>
         <button
-          className={`submenu-item ${activeTab === 'gestionGrades' ? 'active' : ''}`}
+          className={`submenus-items ${activeTab === 'gestionGrades' ? 'active' : ''}`}
           onClick={() => handleTabClick('gestionGrades')}
         >
           Gestion des Grades
         </button>
         <button
-          className={`submenu-item ${activeTab === 'historiquePromotions' ? 'active' : ''}`}
+          className={`submenus-items ${activeTab === 'historiquePromotions' ? 'active' : ''}`}
           onClick={() => handleTabClick('historiquePromotions')}
         >
           Historique des Promotions
         </button>
         <button
-          className={`submenu-item ${activeTab === 'historiqueGrades' ? 'active' : ''}`}
+          className={`submenus-items ${activeTab === 'historiqueGrades' ? 'active' : ''}`}
           onClick={() => handleTabClick('historiqueGrades')}
         >
           Historique des Grades
@@ -46,7 +47,7 @@ const GestionPromotionGrade = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="tab-content">
+      <div className="tab-contents">
         {activeTab === 'gestionPromotions' && <GestionPromotions />}
         {activeTab === 'gestionGrades' && <GestionGrades />}
         {activeTab === 'historiquePromotions' && <HistoriquePromotions />}

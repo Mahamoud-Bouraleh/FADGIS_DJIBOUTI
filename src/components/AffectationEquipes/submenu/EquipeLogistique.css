@@ -1,0 +1,36 @@
+.equipe-logistique-container {
+    background-color: #fff8e1;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .equipe-logistique-container h2 {
+    font-size: 22px;
+    color: #ff9800;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .equipe-logistique-container p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .equipe-logistique-container button {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .equipe-logistique-container button:hover {
+    background-color: #ff9800;
+  }
+  
